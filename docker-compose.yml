@@ -1,0 +1,10 @@
+version: "3" 
+services: 
+ debian-testing: 
+   build: .
+   command: bash -c "cd code && npm i && npm run dev"
+   network_mode: host 
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./:/code
