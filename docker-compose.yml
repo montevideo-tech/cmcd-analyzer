@@ -1,6 +1,6 @@
 version: "3" 
 services: 
- proxy-container: 
+ cmcd-extractor-container: 
    build:
     context: .
     dockerfile: Dockerfile
