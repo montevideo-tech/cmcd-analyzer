@@ -1,9 +1,12 @@
 version: "3" 
 services: 
- debian-testing: 
-   build: .
+ proxy-container: 
+   build:
+    context: .
+    dockerfile: Dockerfile
    command: bash -c "cd code && npm i && npm run dev"
-   network_mode: host 
+   ports: 
+    - "3000:3000" 
    stdin_open: true 
    tty: true 
    volumes: 
