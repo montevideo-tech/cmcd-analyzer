@@ -1,0 +1,13 @@
+version: "3" 
+services: 
+ cmcd-extractor-container: 
+   build:
+    context: .
+    dockerfile: Dockerfile
+   command: bash -c "cd code && npm i && npm run dev"
+   ports: 
+    - "3000:3000" 
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./:/code
