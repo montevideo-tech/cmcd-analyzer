@@ -3,6 +3,6 @@ import { index } from "../controllers/index.controllers.js";
 
 const router = Router();
 
-router.get("/", index);
+router.get('/:base64json/:filename', index);
 
 export default router;
