@@ -3,6 +3,6 @@ import { stream } from "../controllers/stream.controller.js";
 
 const router = Router();
 
-router.get("/:filename", stream);
+router.get("/:id/:filename", stream);
 
 export default router;
