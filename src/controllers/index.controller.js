@@ -1,4 +1,4 @@
-import getCMCDRequestType from "../utils/getCMCDRequestType";
+import getCMCDRequestType from "../utils/getCMCDRequestType.js";
 
 
 export const index = (req, res) => {
