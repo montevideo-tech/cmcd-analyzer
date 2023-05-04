@@ -1,15 +1,14 @@
 import express from "express";
-
-import indexRoutes from "./routes/index.routes.js";
-import videoTestRoutes from "./routes/video-test.routes.js"
+import videoTestRoutes from "./routes/video-test.routes.js";
+import videoRoutes from "./routes/video.routes.js";
 import cors from 'cors'
 
 const app = express();
 
 app.use(cors())
-app.use("/", indexRoutes);
 
 app.use("/video-test", videoTestRoutes);
+app.use("/video", videoRoutes);
 
 app.use((req, res) => {
     res.status(404).json({ message: "Not found" });
