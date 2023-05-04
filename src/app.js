@@ -6,7 +6,7 @@ const app = express();
 
 app.use("/", indexRoutes);
 
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).json({ message: "Not found" });
   });
 
