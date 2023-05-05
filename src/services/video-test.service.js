@@ -19,7 +19,17 @@ export const videoTestService = async (req) => {
             cmcdParam = req?.body;
             break;
         case 'HEADER':
-            cmcdParam = Object.entries(req?.headers).map(([key, value]) => `${key}: ${value}`).join('\n');
+            cmcdParam = req.rawHeaders
+                .reduce((acc, curr, i) => {
+                    if (i % 2 === 0) {
+                        return [...acc, `${curr}:`];
+                    } else {
+                        const lastIndex = acc.length - 1;
+                        acc[lastIndex] = `${acc[lastIndex]} ${curr}`;
+                        return acc;
+                    }
+                }, [])
+                .join('\n');
             break;
     }
 
