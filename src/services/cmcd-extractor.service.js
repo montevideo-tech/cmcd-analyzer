@@ -5,27 +5,32 @@ import jsLogger from 'js-logger';
 export const cmcdValidator = (cmcdParam, type) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
     let valid;
+    let validatorRes;
     switch (type) {
         case 'QUERY':
-            valid = CMCDQueryValidator(cmcdParam, null, true).valid ?  'Query is valid.' : 'Query not valid.'
+            validatorRes = CMCDQueryValidator(cmcdParam, null);
+            valid = validatorRes.valid ?  'Query is valid.' : 'Query not valid.'
             jsLogger.info(valid);
-            jsLogger.info(CMCDQueryValidator(cmcdParam, null, true));
+            jsLogger.info(validatorRes);
             break;
         case 'JSON':
-            valid = CMCDJsonValidator(cmcdParam, null, true).valid ?  'Json is valid.' : 'Json not valid.'
+            validatorRes = CMCDJsonValidator(cmcdParam, null, true);
+            valid = validatorRes.valid ?  'Json is valid.' : 'Json not valid.';
             jsLogger.info(valid);
-            jsLogger.info(CMCDJsonValidator(cmcdParam, null, true));
+            jsLogger.info(validatorRes);
             break;
         case 'HEADER':
-            valid = CMCDHeaderValidator(cmcdParam, null, true) ?  'Header is valid.' : 'Header not valid.'
+            validatorRes = CMCDHeaderValidator(cmcdParam, null, true)
+            valid =  validatorRes.valid ?  'Header is valid.' : 'Header not valid.'
             jsLogger.info(valid);
-            jsLogger.info(CMCDHeaderValidator(cmcdParam, null, true));
+            jsLogger.info(validatorRes);
             break;
         default:
             jsLogger.info('Invalid cmcd Parameter.');
             break;
     }
 }
+
 export const decodeBase64AndConcat = (b64Json, videoUrl) => {
     
     const decodedJson = JSON.parse(Buffer.from(b64Json, 'base64').toString());
