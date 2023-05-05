@@ -26,7 +26,7 @@ To use the CMCD-Analyzer  feed the player a modified URL that points towards the
 #### Example:
 A modified URL should be structured like this:
 ````
-<ip>:<port>/video-test/<id>/<file-name>.
+<ip>:<port>/video-test/<id>/<file-name>
 ````
 URL example:
 ````
