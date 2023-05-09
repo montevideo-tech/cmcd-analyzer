@@ -1,42 +1,19 @@
-import { CMCDHeaderValidator, CMCDJsonValidator, CMCDQueryValidator } from "@montevideo-tech/cmcd-validator"; 
-import jsLogger from 'js-logger';
+import axios from 'axios';
+import { getCMCDRequestType } from '../utils/getCMCDRequestType.js'
+import { getCMCDParameter } from '../utils/getCMCDParameter.js';
+import { cmcdValidator } from '../utils/cmcdValidator.js';
 
-// cmcdParam is a string, cmcdParam can be a header, a query or a json.
-export const cmcdValidator = (cmcdParam, type) => {
-    jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
-    let valid;
-    switch (type) {
-        case 'QUERY':
-            valid = CMCDQueryValidator(cmcdParam, null, true).valid ?  'Query is valid.' : 'Query not valid.'
-            jsLogger.info(valid);
-            jsLogger.info(CMCDQueryValidator(cmcdParam, null, true));
-            break;
-        case 'JSON':
-            valid = CMCDJsonValidator(cmcdParam, null, true).valid ?  'Json is valid.' : 'Json not valid.'
-            jsLogger.info(valid);
-            jsLogger.info(CMCDJsonValidator(cmcdParam, null, true));
-            break;
-        case 'HEADER':
-            valid = CMCDHeaderValidator(cmcdParam, null, true) ?  'Header is valid.' : 'Header not valid.'
-            jsLogger.info(valid);
-            jsLogger.info(CMCDHeaderValidator(cmcdParam, null, true));
-            break;
-        default:
-            jsLogger.info('Invalid cmcd Parameter.');
-            break;
-    }
+export const cmcdExtractorService = async (req, reqURI) => {
+    // const { filename } = req.params
+    // const reqURI = VIDEO_TEST_URL.concat(filename);
+    const newHeaders = {...req.headers};
+    delete newHeaders.host;
+    
+    // reqest validation
+    const type = getCMCDRequestType(req);
+    const cmcdParam = getCMCDParameter(req, reqURI, type);
+    cmcdValidator(cmcdParam, type);
+
+    const {headers, data} = await axios.get(reqURI, { responseType: 'stream', headers:newHeaders, query: req.query });
+    return {headers: headers, data: data};
 }
-export const decodeBase64AndConcat = (b64Json, videoUrl) => {
-    
-    const decodedJson = JSON.parse(Buffer.from(b64Json, 'base64').toString());
-    let b64url = decodedJson.url;
-
-    if(!b64url.endsWith("/")){
-      b64url = `${b64url+'/'}`
-    }
-    
-    const concatenatedUrl = `${b64url}${videoUrl}`;
-  
-
-    return concatenatedUrl;
-  };
