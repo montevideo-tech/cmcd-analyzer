@@ -5,7 +5,7 @@ import jsLogger from 'js-logger';
 export const cmcdValidator = (cmcdParam, type) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
     let valid;
-    let validatorRes;
+    let validatorRes = {};
     switch (type) {
         case 'QUERY':
             validatorRes = CMCDQueryValidator(cmcdParam, null);
@@ -29,6 +29,7 @@ export const cmcdValidator = (cmcdParam, type) => {
             jsLogger.info('Invalid cmcd Parameter.');
             break;
     }
+    return validatorRes;
 }
 
 export const decodeBase64AndConcat = (b64Json, videoUrl) => {
