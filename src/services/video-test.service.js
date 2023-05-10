@@ -3,15 +3,7 @@ import { VIDEO_TEST_URL } from '../config.js';
 import { cmcdValidator } from '../services/cmcd-extractor.service.js';
 import getCMCDRequestType from '../utils/getCMCDRequestType.js';
 import jsLogger from 'js-logger';
-import { Client } from '@elastic/elasticsearch';
-
-const client = new Client({
-    node: 'http://elasticsearch:9200',
-    auth: {
-        username: 'elastic',
-        password: 'changeme'
-    }
-})
+import saveData from '../utils/saveData.js';
 
 export const videoTestService = async (req) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
@@ -48,14 +40,9 @@ export const videoTestService = async (req) => {
     const validatorRes = cmcdValidator(cmcdParam, type);
     const {headers, data} = await axios.get(reqURI, { responseType: 'stream', headers:newHeaders, query: req.query });
     
-    try {
-        await client.index({
-            index: id,
-            body: validatorRes
-        });
-    } catch (error) {
-        console.error(error);
-    }
+    jsLogger.info('Saving data into the database...')
+    saveData(id, validatorRes);
+    
     
     return {headers: headers, data: data};
 }
