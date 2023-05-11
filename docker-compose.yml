@@ -97,17 +97,25 @@ services:
     depends_on:
       - elasticsearch
     restart: unless-stopped
+  
   cmcd-extractor-container: 
    build:
     context: .
     dockerfile: Dockerfile
    command: bash -c "cd code && npm i && npm run dev"
    ports: 
-    - "3000:3000" 
+    - 3000:3000
+   environment:
+    - ELASTICSEARCH_HOST=elasticsearch
+    - ELASTICSEARCH_PORT=9200
+   networks:
+    - elk
    stdin_open: true 
    tty: true 
    volumes: 
      - ./:/code
+   depends_on:
+     - elasticsearch
 
 networks:
   elk:

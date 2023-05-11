@@ -15,7 +15,7 @@ const getCMCDRequestType = (req) =>{
     type = 'JSON';
   } else {
     jsLogger.info('No CMCD parameters in the request.');
-    type = 'NoCMCD';
+    type = 'QUERY';
   }
 
   return type;

@@ -21,6 +21,7 @@
   "devDependencies": {
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
+    "@elastic/elasticsearch": "^8.7.0",
     "@jest-mock/express": "^2.0.1",
     "axios": "^1.4.0",
     "babel-jest": "^29.5.0",
