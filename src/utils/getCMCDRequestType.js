@@ -7,7 +7,7 @@ const getCMCDRequestType = (req) =>{
   if (req.query?.CMCD) {
     jsLogger.info('The request type is: QUERY.');
     type = 'QUERY';
-  } else if (req?.headers['CMCD-Request'] || req.headers['CMCD-Object'] || req.headers['CMCD-Status'] || req.headers['CMCD-Session']) {
+  } else if (req?.headers['cmcd-request'] || req.headers['cmcd-object'] || req.headers['cmcd-status'] || req.headers['cmcd-session']) {
     jsLogger.info('The request type is: HEADER.');
     type = 'HEADER';
   } else if (req?.headers['Content-Type'] === 'application/json') {
@@ -15,7 +15,7 @@ const getCMCDRequestType = (req) =>{
     type = 'JSON';
   } else {
     jsLogger.info('No CMCD parameters in the request.');
-    type = 'NoCMCD';
+    type = 'QUERY';
   }
 
   return type;
