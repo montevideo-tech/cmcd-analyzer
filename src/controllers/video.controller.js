@@ -4,10 +4,11 @@ import { decodeBase64AndConcat } from '../utils/decodeBse64Concat.js';
 export const video = async (req, res) => {
 
     try {
+        const dateStart = new Date().toISOString();
         const jsonBase64 = req.params['jsonbase64'];
         const videoURL = req.params['filename'];
-        const decodedJson = decodeBase64AndConcat(jsonBase64, videoURL);
-        const {headers, data} = await cmcdExtractorService(req, decodedJson);
+        const {concatenatedUrl, decodedJson}  = decodeBase64AndConcat(jsonBase64, videoURL);
+        const {headers, data} = await cmcdExtractorService(req, concatenatedUrl, decodedJson, dateStart);
         res.header(headers)
         data.pipe(res);
     } catch (error) {
