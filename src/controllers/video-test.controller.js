@@ -1,9 +1,12 @@
-import { videoTestService } from '../services/video-test.service.js';
+import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
+import { VIDEO_TEST_URL } from '../config.js';
 
 export const videoTest = async (req, res) => {
 
     try {
-        const {headers, data} = await videoTestService(req);
+        const { filename } = req.params
+        const reqURI = VIDEO_TEST_URL.concat(filename);
+        const {headers, data} = await cmcdExtractorService(req, reqURI);
         res.header(headers)
         data.pipe(res);
     } catch (error) {

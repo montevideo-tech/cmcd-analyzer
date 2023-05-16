@@ -1,48 +1,24 @@
-import { CMCDHeaderValidator, CMCDJsonValidator, CMCDQueryValidator } from "@montevideo-tech/cmcd-validator"; 
+import axios from 'axios';
+import getCMCDRequestType from '../utils/getCMCDRequestType.js'
+import { getCMCDParameter } from '../utils/getCMCDParameter.js';
+import { cmcdValidator } from '../utils/cmcdValidator.js';
 import jsLogger from 'js-logger';
+import saveData from '../utils/saveData.js';
 
-// cmcdParam is a string, cmcdParam can be a header, a query or a json.
-export const cmcdValidator = (cmcdParam, type) => {
+export const cmcdExtractorService = async (req, reqURI) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
-    let valid;
-    let validatorRes = {};
-    switch (type) {
-        case 'QUERY':
-            validatorRes = CMCDQueryValidator(cmcdParam, null);
-            valid = validatorRes.valid ?  'Query is valid.' : 'Query not valid.'
-            jsLogger.info(valid);
-            jsLogger.info(validatorRes);
-            break;
-        case 'JSON':
-            validatorRes = CMCDJsonValidator(cmcdParam, null, true);
-            valid = validatorRes.valid ?  'Json is valid.' : 'Json not valid.';
-            jsLogger.info(valid);
-            jsLogger.info(validatorRes);
-            break;
-        case 'HEADER':
-            validatorRes = CMCDHeaderValidator(cmcdParam, null, true)
-            valid =  validatorRes.valid ?  'Header is valid.' : 'Header not valid.'
-            jsLogger.info(valid);
-            jsLogger.info(validatorRes);
-            break;
-        default:
-            jsLogger.info('Invalid cmcd Parameter.');
-            break;
-    }
-    return validatorRes;
+    const id = req.params['id'];
+    const newHeaders = {...req.headers};
+    delete newHeaders.host;
+    
+    // reqest validation
+    const type = getCMCDRequestType(req);
+    const cmcdParam = getCMCDParameter(req, reqURI, type);
+    const validatorRes = cmcdValidator(cmcdParam, type);
+
+    const {headers, data} = await axios.get(reqURI, { responseType: 'stream', headers:newHeaders, query: req.query });
+    jsLogger.info('Saving data into the database...')
+    saveData(id, validatorRes);
+    
+    return {headers: headers, data: data};
 }
-
-export const decodeBase64AndConcat = (b64Json, videoUrl) => {
-    
-    const decodedJson = JSON.parse(Buffer.from(b64Json, 'base64').toString());
-    let b64url = decodedJson.url;
-
-    if(!b64url.endsWith("/")){
-      b64url = `${b64url+'/'}`
-    }
-    
-    const concatenatedUrl = `${b64url}${videoUrl}`;
-  
-
-    return concatenatedUrl;
-  };
