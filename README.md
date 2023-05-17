@@ -1,6 +1,5 @@
 
 # CMCD-Analyzer
-
 **Welcome to CMCD-Analyzer.**
 
 The CMCD-Analyzer allows any developer or tester to collect and analyze data from any type of player that has CMCD implemented. To be more specific, it will intercept players requests to check if the CMCD keys sent to the CDN are valid or not regarding the [CMCD Standard](https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf).
@@ -82,12 +81,20 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
 1. Log in with the following credentials:
 
+![Login](https://github.com/montevideo-tech/cmcd-analyzer/blob/83e19cc84288eca16de40b3dd740f72c475054a0/images/login.png)
 
 2. Got to the hamburguer menu and select ````discover```` from analytics:
 
+![Discover](https://github.com/montevideo-tech/cmcd-analyzer/blob/83e19cc84288eca16de40b3dd740f72c475054a0/images/discover.png)
 
 3. Press ````Create data view````:
 
+![Create data view](https://github.com/montevideo-tech/cmcd-analyzer/blob/83e19cc84288eca16de40b3dd740f72c475054a0/images/create%20data%20view.png)
+
 4. Name it as you want and set the index pattern to ````*1````, then select ````received_datetime```` as Timestamp field and press ````save data view to Kibana````.
 
+![Prueba](https://github.com/montevideo-tech/cmcd-analyzer/blob/83e19cc84288eca16de40b3dd740f72c475054a0/images/prueba.png)
+
 5. Watch the collected data:
+
+![enter image description here](https://github.com/montevideo-tech/cmcd-analyzer/blob/83e19cc84288eca16de40b3dd740f72c475054a0/images/data.png)
