@@ -5,9 +5,10 @@ import jsLogger from 'js-logger';
 export const videoTest = async (req, res) => {
 
     try {
+        const dateStart = new Date().toISOString();
         const { filename } = req.params
         const reqURI = VIDEO_TEST_URL.concat(filename);
-        const {headers, data} = await cmcdExtractorService(req, reqURI);
+        const {headers, data} = await cmcdExtractorService(req, reqURI, {}, dateStart);
         res.header(headers)
         data.pipe(res);
     } catch (error) {

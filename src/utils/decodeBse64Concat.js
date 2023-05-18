@@ -6,9 +6,7 @@ export const decodeBase64AndConcat = (b64Json, videoUrl) => {
     if(!b64url.endsWith("/")){
       b64url = `${b64url+'/'}`
     }
-    
     const concatenatedUrl = `${b64url}${videoUrl}`;
-  
 
-    return concatenatedUrl;
+    return {concatenatedUrl, decodedJson};
 };
