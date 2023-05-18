@@ -11,7 +11,7 @@ export const saveData = async (id, validatorRes) => {
         });
         jsLogger.info(`${id}: Data has been saved successfully`)
     } catch (error) {
-        jsLogger.error(error);
+        jsLogger.error(`${id}: `, error);
     }
 }
 
