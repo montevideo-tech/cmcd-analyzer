@@ -100,7 +100,7 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
   
 
-<ip>:<port>/video/<id>/{base_64_encoded}/<file-name>
+<ip>:<port>/video/<id>/<base_64_encoded>/<file-name>
 
   
 
