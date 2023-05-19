@@ -158,9 +158,9 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 	
 2. Go to the hamburguer menu and select ````discover```` from analytics.
 
-3. If there's not a created dataview press ````Create data view````.But in case you don't see this button, it means you already have a dataview created. 
+3. If there's not a created dataview, press ````Create data view````. But in case you don't see this button, it means you already have a dataview created. 
 Under the hamburguer menu there will be a dropdown showing the selected dataview, if you press it you will see the option ````Create data view```` so you can create your own.
  
-4. Name it as you want and set the index pattern(which is the id), then select ````received_datetime```` as Timestamp field and press ````save data view to Kibana````.
+4. Name it as you want and set the index pattern (which is the id added in the URL), then select ````received_datetime```` as Timestamp field and press ````save data view to Kibana````.
 
 5. Watch the collected data.
