@@ -1,20 +1,20 @@
 import jsLogger from 'js-logger';
 
-const getCMCDRequestType = (req) =>{
+const getCMCDRequestType = (req, id) =>{
   jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
   let type;
 
   if (req.query?.CMCD) {
-    jsLogger.info('The request type is: QUERY.');
+    jsLogger.info(`${id}: The request type is: QUERY.`);
     type = 'QUERY';
   } else if (req?.headers['cmcd-request'] || req.headers['cmcd-object'] || req.headers['cmcd-status'] || req.headers['cmcd-session']) {
-    jsLogger.info('The request type is: HEADER.');
+    jsLogger.info(`${id}: The request type is: HEADER.`);
     type = 'HEADER';
   } else if (req?.headers['Content-Type'] === 'application/json') {
-    jsLogger.info('The request type is: JSON.');
+    jsLogger.info(`${id}: The request type is: JSON.`);
     type = 'JSON';
   } else {
-    jsLogger.info('No CMCD parameters in the request.');
+    jsLogger.info(`${id}: No CMCD parameters in the request.`);
     type = 'QUERY';
   }
 

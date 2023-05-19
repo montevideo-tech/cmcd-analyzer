@@ -13,12 +13,12 @@ export const cmcdExtractorService = async (req, reqURI, decodedJson, dateStart) 
     const body = {};
     
     // reqest validation
-    const type = getCMCDRequestType(req);
+    const type = getCMCDRequestType(req, id);
     const cmcdParam = getCMCDParameter(req, reqURI, type);
-    const validatorRes = cmcdValidator(cmcdParam, type);
+    const validatorRes = cmcdValidator(cmcdParam, type, id);
 
     const {headers, data} = await axios.get(reqURI, { responseType: 'stream', headers:newHeaders, query: req.query });
-    jsLogger.info('Saving data into the database...')
+    jsLogger.info(`${id}: Saving data into the database...`)
 
     body.id = id;
     body['user-agent'] = req.headers['user-agent'];

@@ -9,9 +9,9 @@ export const saveData = async (id, validatorRes) => {
             index: id,
             body: validatorRes
         });
-        jsLogger.info('Data has been saved successfully')
+        jsLogger.info(`${id}: Data has been saved successfully`)
     } catch (error) {
-        jsLogger.error(error);
+        jsLogger.error(`${id}: `, error);
     }
 }
 
