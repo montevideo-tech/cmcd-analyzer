@@ -1,0 +1,68 @@
+{
+  "version": "8.7.0",
+  "objects": [
+    {
+      "id": "e96e32b0-f995-11ed-bcc6-67e5074f3720",
+      "type": "dashboard",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2023-05-24T16:49:32.611Z",
+      "created_at": "2023-05-24T16:49:32.611Z",
+      "version": "Wzc5NzMsMzdd",
+      "attributes": {
+        "description": "Has bl, br and mtp",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filter\":[]}"
+        },
+        "optionsJSON": "{\"useMargins\":true,\"syncColors\":false,\"syncCursor\":true,\"syncTooltips\":false,\"hidePanelTitles\":false}",
+        "panelsJSON": "[{\"version\":\"8.7.0\",\"type\":\"lens\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"9cddbbe1-bba3-4058-b599-24a7471cace1\"},\"panelIndex\":\"9cddbbe1-bba3-4058-b599-24a7471cace1\",\"embeddableConfig\":{\"attributes\":{\"title\":\"\",\"visualizationType\":\"lnsXY\",\"type\":\"lens\",\"references\":[{\"type\":\"index-pattern\",\"id\":\"5c9504c2-a540-4ccb-b2ef-cb64cd3e94d7\",\"name\":\"indexpattern-datasource-layer-a600f78d-4a65-469c-bfe4-c917e0f3ff04\"},{\"type\":\"index-pattern\",\"id\":\"5c9504c2-a540-4ccb-b2ef-cb64cd3e94d7\",\"name\":\"indexpattern-datasource-layer-fd44a192-7e7d-4b54-83b7-d5707808ae00\"}],\"state\":{\"visualization\":{\"legend\":{\"isVisible\":true,\"position\":\"right\"},\"valueLabels\":\"hide\",\"fittingFunction\":\"None\",\"axisTitlesVisibilitySettings\":{\"x\":true,\"yLeft\":true,\"yRight\":true},\"tickLabelsVisibilitySettings\":{\"x\":true,\"yLeft\":true,\"yRight\":true},\"labelsOrientation\":{\"x\":0,\"yLeft\":0,\"yRight\":0},\"gridlinesVisibilitySettings\":{\"x\":true,\"yLeft\":true,\"yRight\":true},\"preferredSeriesType\":\"line\",\"layers\":[{\"layerId\":\"a600f78d-4a65-469c-bfe4-c917e0f3ff04\",\"accessors\":[\"a19a5f52-fb4c-4341-8225-62bdc3e69e0a\",\"aed270d3-e907-4d95-b9cd-36c831b81744\"],\"position\":\"top\",\"seriesType\":\"line\",\"showGridlines\":false,\"layerType\":\"data\",\"xAccessor\":\"d6a223c0-dd2c-4f69-9a01-a0186bd46590\"},{\"layerId\":\"fd44a192-7e7d-4b54-83b7-d5707808ae00\",\"layerType\":\"data\",\"accessors\":[\"8de24569-5628-4644-bf68-21de521b6164\"],\"seriesType\":\"line\",\"xAccessor\":\"cebbc6f4-4324-41bc-8b15-bed78ccea655\"}]},\"query\":{\"query\":\"\",\"language\":\"kuery\"},\"filters\":[],\"datasourceStates\":{\"formBased\":{\"layers\":{\"a600f78d-4a65-469c-bfe4-c917e0f3ff04\":{\"columns\":{\"d6a223c0-dd2c-4f69-9a01-a0186bd46590\":{\"label\":\"received_datetime\",\"dataType\":\"date\",\"operationType\":\"date_histogram\",\"sourceField\":\"received_datetime\",\"isBucketed\":true,\"scale\":\"interval\",\"params\":{\"interval\":\"auto\",\"includeEmptyRows\":true,\"dropPartials\":false}},\"a19a5f52-fb4c-4341-8225-62bdc3e69e0a\":{\"label\":\"Median of cmcd_keys.bl\",\"dataType\":\"number\",\"operationType\":\"median\",\"sourceField\":\"cmcd_keys.bl\",\"isBucketed\":false,\"scale\":\"ratio\",\"params\":{\"emptyAsNull\":true}},\"aed270d3-e907-4d95-b9cd-36c831b81744\":{\"label\":\"Median of cmcd_keys.br\",\"dataType\":\"number\",\"operationType\":\"median\",\"sourceField\":\"cmcd_keys.br\",\"isBucketed\":false,\"scale\":\"ratio\",\"params\":{\"emptyAsNull\":true}}},\"columnOrder\":[\"d6a223c0-dd2c-4f69-9a01-a0186bd46590\",\"a19a5f52-fb4c-4341-8225-62bdc3e69e0a\",\"aed270d3-e907-4d95-b9cd-36c831b81744\"],\"incompleteColumns\":{},\"sampling\":1},\"fd44a192-7e7d-4b54-83b7-d5707808ae00\":{\"linkToLayers\":[],\"columns\":{\"8de24569-5628-4644-bf68-21de521b6164\":{\"label\":\"Median of cmcd_keys.mtp\",\"dataType\":\"number\",\"operationType\":\"median\",\"sourceField\":\"cmcd_keys.mtp\",\"isBucketed\":false,\"scale\":\"ratio\",\"params\":{\"emptyAsNull\":true}},\"cebbc6f4-4324-41bc-8b15-bed78ccea655\":{\"label\":\"returned_datetime\",\"dataType\":\"date\",\"operationType\":\"date_histogram\",\"sourceField\":\"returned_datetime\",\"isBucketed\":true,\"scale\":\"interval\",\"params\":{\"interval\":\"auto\",\"includeEmptyRows\":true,\"dropPartials\":false}}},\"columnOrder\":[\"cebbc6f4-4324-41bc-8b15-bed78ccea655\",\"8de24569-5628-4644-bf68-21de521b6164\"],\"sampling\":1,\"incompleteColumns\":{}}}},\"textBased\":{\"layers\":{}}},\"internalReferences\":[],\"adHocDataViews\":{}}},\"enhancements\":{}}}]",
+        "timeRestore": false,
+        "title": "[CMCD Dashboard] bl, br and mtp",
+        "version": 1
+      },
+      "references": [
+        {
+          "id": "5c9504c2-a540-4ccb-b2ef-cb64cd3e94d7",
+          "name": "9cddbbe1-bba3-4058-b599-24a7471cace1:indexpattern-datasource-layer-a600f78d-4a65-469c-bfe4-c917e0f3ff04",
+          "type": "index-pattern"
+        },
+        {
+          "id": "5c9504c2-a540-4ccb-b2ef-cb64cd3e94d7",
+          "name": "9cddbbe1-bba3-4058-b599-24a7471cace1:indexpattern-datasource-layer-fd44a192-7e7d-4b54-83b7-d5707808ae00",
+          "type": "index-pattern"
+        }
+      ],
+      "migrationVersion": {
+        "dashboard": "8.7.0"
+      },
+      "coreMigrationVersion": "8.7.0"
+    },
+    {
+      "id": "5c9504c2-a540-4ccb-b2ef-cb64cd3e94d7",
+      "type": "index-pattern",
+      "namespaces": [
+        "default"
+      ],
+      "updated_at": "2023-05-24T16:49:32.611Z",
+      "created_at": "2023-05-24T16:49:32.611Z",
+      "version": "Wzc5NzIsMzdd",
+      "attributes": {
+        "fieldAttrs": "{}",
+        "fieldFormatMap": "{}",
+        "fields": "[]",
+        "name": "CMCD-Data",
+        "runtimeFieldMap": "{}",
+        "sourceFilters": "[]",
+        "timeFieldName": "received_datetime",
+        "title": "1",
+        "typeMeta": "{}"
+      },
+      "references": [],
+      "migrationVersion": {
+        "index-pattern": "8.0.0"
+      },
+      "coreMigrationVersion": "8.7.0"
+    }
+  ]
+}

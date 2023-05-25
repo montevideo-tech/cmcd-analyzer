@@ -164,3 +164,13 @@ Under the hamburguer menu there will be a dropdown showing the selected dataview
 4. Name it as you want and set the index pattern (which is the id added in the URL), then select ````received_datetime```` as Timestamp field and press ````save data view to Kibana````.
 
 5. Watch the collected data.
+
+**Load dashboard template example:**
+
+There is one dashboard example, to make it available on kibana run ````./kibanaTemplate.sh````
+
+DataView: CMCD-Data
+
+Dashboard: [CMCD DashBoard] bl, br and mtp
+
+id requierd to load data: 1
