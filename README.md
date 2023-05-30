@@ -148,7 +148,19 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
 ## Analyze data
 
-  
+**Load dashboard template example:**
+
+There's a dashboard example, to make it available on kibana, run: 
+(make sure you have the environment running with docker compose before run the script)
+ 
+ ```` cd kibana && ./kibana/kibanaTemplate.sh ````
+
+DataView Name: CMCD-Data
+Dashboard Name: DashBoard
+
+id requierd to load data: 1  
+
+
 
 **To see the collected data, you simply have to access Elastic in ````http://localhost:5601/```` and follow these steps:**
 
@@ -165,12 +177,4 @@ Under the hamburguer menu there will be a dropdown showing the selected dataview
 
 5. Watch the collected data.
 
-**Load dashboard template example:**
 
-There is one dashboard example, to make it available on kibana run ````./kibana/kibanaTemplate.sh````
-
-DataView: CMCD-Data
-
-Dashboard: [CMCD DashBoard] bl, br and mtp
-
-id requierd to load data: 1
