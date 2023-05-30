@@ -156,6 +156,7 @@ There's a dashboard example, to make it available on kibana, run:
  ```` cd kibana && ./kibana/kibanaTemplate.sh ````
 
 DataView Name: CMCD-Data
+
 Dashboard Name: DashBoard
 
 id requierd to load data: 1  
