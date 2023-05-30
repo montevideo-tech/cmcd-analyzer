@@ -167,7 +167,7 @@ Under the hamburguer menu there will be a dropdown showing the selected dataview
 
 **Load dashboard template example:**
 
-There is one dashboard example, to make it available on kibana run ````./kibanaTemplate.sh````
+There is one dashboard example, to make it available on kibana run ````./kibana/kibanaTemplate.sh````
 
 DataView: CMCD-Data
 
