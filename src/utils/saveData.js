@@ -5,14 +5,14 @@ export const saveData = async (id, validatorRes) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
 
     try {
-        jsLogger.info(`${id}: Saving data into the database...`);
+        jsLogger.info(`${id.replace('logs-')}: Saving data into the database...`);
         await client.index({
-            index: `logs-${id}`,
+            index: id,
             body: validatorRes
         });
-        jsLogger.info(`${id}: Data has been saved successfully.`);
+        jsLogger.info(`${id.replace('logs-')}: Data has been saved successfully.`);
     } catch (error) {
-        jsLogger.error(`${id}: `, error);
+        jsLogger.error(`${id.replace('logs-')}: `, error);
     }
 }
 
