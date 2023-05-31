@@ -1,10 +1,19 @@
 import jsLogger from 'js-logger';
-import saveData from './saveData.js';
+import { client } from '../config.js';
 
-const log = (id, value, level) => {
+const log = async (id, value, level) => {
     jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
     jsLogger[level](`${id}: ${JSON.stringify(value)}`);
-    saveData(`logs-${id}`, value);
+
+    try {
+        await client.index({
+            index: `logs-${id}`,
+            body: value
+        });
+    } catch (error) {
+        jsLogger.error(`${id}: `, error);
+    }
+
 };
 
 export default log;
