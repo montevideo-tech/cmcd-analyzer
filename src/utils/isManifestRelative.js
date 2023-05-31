@@ -31,7 +31,7 @@ const obtainManifestPathMpd = (manifest) => {
     });
     let elementPath = [];
     const elements = ['BaseURL', 'media'];
-    for (e in elements) {
+    for (let e in elements) {
       const res = findElement(xmlDoc, elements[e], elementPath);
       if (res !== null) {
         const videoURL = res instanceof Array ? res[0] : res;
