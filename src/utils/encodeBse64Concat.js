@@ -8,10 +8,3 @@ export const encodeUrl= (url, host, id) => {
     return {concatenatedUrl, encodedUrl};
     
 };
-
-export const decodeUrl= (url) => {
-    const base64String = url.split("/")[url.split("/").length - 2];
-    const decodedUrl = Buffer.from(base64String, 'base64').toString();
-    return {decodedUrl};
-    
-};
