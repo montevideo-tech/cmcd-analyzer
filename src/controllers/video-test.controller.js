@@ -1,28 +1,54 @@
-import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import { VIDEO_TEST_URL } from '../config.js';
-import jsLogger from 'js-logger';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import zlib from 'zlib';
 
-export const videoTest = async (req, res) => {
+export const videoTest = (req, res, next) => {
 
     try {
-        const dateStart = new Date().toISOString();
-        const { filename } = req.params
-        const reqURI = VIDEO_TEST_URL.concat(filename);
-        const {headers, data} = await cmcdExtractorService(req, reqURI, {}, dateStart);
-        res.header(headers)
-        data.pipe(res);
+        const proxy = createProxyMiddleware({
+            target: VIDEO_TEST_URL,
+            changeOrigin: true,
+            selfHandleResponse: true,
+            pathRewrite: function (path, req) {
+
+                const resPath = path.replace(`/video-test/${req.params.id}/`, '');
+
+                return resPath;
+            },
+            onProxyRes: function (proxyRes, req, res) {
+
+                const headers = proxyRes.headers['content-encoding'];
+                
+                let body = [];
+                proxyRes.on('data', function (chunk) {
+                    body.push(chunk);
+                });            
+
+                proxyRes.on('end', function () {
+                    let modifiedBody = '';
+                    try {
+                        if ( headers === 'gzip') {
+                            const data = zlib.gunzipSync(Buffer.concat(body));
+
+                            modifiedBody = data.toString().toUpperCase();
+                        } else {
+                            modifiedBody = Buffer.concat(body).toString().toUpperCase();
+                        }
+                    }
+                    catch (err) {
+                        console.log(err);
+                    }
+                    res.end(modifiedBody);
+                });
+
+            }
+
+        });
+
+        proxy(req, res, next);
+        
     } catch (error) {
-        if (error.response) {
-            // The client was given an error response (5xx, 4xx)
-            jsLogger.error(error.response.status, error.response.statusText);
-            res.status(error.response.status).send(error.response.statusText);
-        // } else if (error.request) {
-        //     // The client never received a response, and the request was never left
-        } else {
-            // Anything else
-            res.status(500).send('Internal server error');
-        }
-
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-
 };
