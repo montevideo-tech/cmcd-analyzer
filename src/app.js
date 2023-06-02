@@ -3,8 +3,6 @@ import videoTestRoutes from "./routes/video-test.routes.js";
 import videoRoutes from "./routes/video.routes.js";
 import cors from 'cors'
 
-import { createProxyMiddleware } from 'http-proxy-middleware';
-
 const app = express();
 
 app.use(express.json());
