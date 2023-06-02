@@ -1,28 +1,74 @@
-import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import { VIDEO_TEST_URL } from '../config.js';
-import jsLogger from 'js-logger';
+import { createProxyMiddleware } from 'http-proxy-middleware';
+import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
+import path from 'path';
+import zlib from 'zlib';
+import log from '../utils/logger.js';
 
-export const videoTest = async (req, res) => {
+export const videoTest = (req, res, next) => {
+    
+    const dateStart = new Date().toISOString();
+    const {id} = req.params;
+    const ext = path.extname(req.params[0]);
+    const isManifest = ext === '.m3u8' || ext === '.mpd';
+    const baseUrl = `${req.protocol}://${req.get('host')}/video-test/${id}/`;
+    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
 
     try {
-        const dateStart = new Date().toISOString();
-        const { filename } = req.params
-        const reqURI = VIDEO_TEST_URL.concat(filename);
-        const {headers, data} = await cmcdExtractorService(req, reqURI, {}, dateStart);
-        res.header(headers)
-        data.pipe(res);
+        const proxy = createProxyMiddleware({
+            target: VIDEO_TEST_URL,
+            changeOrigin: true,
+            selfHandleResponse: isManifest,
+            pathRewrite: function (path, req) {
+
+                const resPath = path.replace(`/video-test/${req.params.id}/`, '');
+
+                return resPath;
+            },
+            onProxyRes: function (proxyRes, req, res) {
+
+                if (isManifest)
+                {
+                    const contentEncoding = proxyRes.headers['content-encoding'];
+                
+                    let body = [];
+                    proxyRes.on('data', function (chunk) {
+                        body.push(chunk);
+                    });            
+    
+                    proxyRes.on('end', function () {
+                        let modifiedBody = '';
+                        try {
+                            if ( contentEncoding === 'gzip') {
+                                const data = zlib.gunzipSync(Buffer.concat(body));
+    
+                                modifiedBody = data.toString();
+                            } else if (contentEncoding === 'br') {
+                                const data = zlib.brotliDecompressSync(Buffer.concat(body));
+                                modifiedBody = data.toString();
+                            }
+                            else {
+                                modifiedBody = Buffer.concat(body).toString();
+                            }
+                        }
+                        catch (err) {
+                            console.log(err);
+                        }
+                        //modifyManifest
+                        // console.log(baseUrl, reqURI);
+                        res.end(modifiedBody);
+                    });
+                }
+
+            }
+
+        });
+
+        proxy(req, res, next);
+        cmcdExtractorService(id, req, reqURI, {}, dateStart)
+        
     } catch (error) {
-        if (error.response) {
-            // The client was given an error response (5xx, 4xx)
-            jsLogger.error(error.response.status, error.response.statusText);
-            res.status(error.response.status).send(error.response.statusText);
-        // } else if (error.request) {
-        //     // The client never received a response, and the request was never left
-        } else {
-            // Anything else
-            res.status(500).send('Internal server error');
-        }
-
+        log(id, error, 'error');
+        res.status(500).json({ message: 'Internal Server Error' });
     }
-
 };

@@ -148,7 +148,28 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
 ## Analyze data
 
-  
+**Load dashboard template example:**
+
+There's a dashboard example, to make it available on kibana run the following command in another command line: 
+ 
+ ```` cd kibana && ./kibanaTemplate.sh ````
+>  **_NOTE:_** Make sure you have the environment running with docker compose before run the script.
+
+DataView Name: CMCD-Data
+
+Dashboard Name: DashBoard
+
+id requierd to load data: 1  
+
+However, this can be changed by modifying the data view CMCD data. To be able to do this follow these steps:
+
+1. Navigate to the 'Discover' section.
+
+2. Locate and select 'CMCD-Data' from the available dataviews options.
+
+3. Click on 'Manage this dataview' to access the editing interface for this specific dataview.
+
+4. In the 'Index Pattern' field, replace the default number '1' with the desired ID you wish to use." 
 
 **To see the collected data, you simply have to access Elastic in ````http://localhost:5601/```` and follow these steps:**
 
@@ -164,3 +185,5 @@ Under the hamburguer menu there will be a dropdown showing the selected dataview
 4. Name it as you want and set the index pattern (which is the id added in the URL), then select ````received_datetime```` as Timestamp field and press ````save data view to Kibana````.
 
 5. Watch the collected data.
+
+
