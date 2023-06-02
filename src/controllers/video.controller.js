@@ -3,6 +3,7 @@ import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import { decodeBase64AndConcat } from '../utils/decodeBse64Concat.js'
 import path from 'path';
 import zlib from 'zlib';
+import log from '../utils/logger.js';
 
 export const video = (req, res, next) => {
     
@@ -57,7 +58,7 @@ export const video = (req, res, next) => {
                             console.log(err);
                         }
                         //modifyManifest
-                        console.log(baseUrl, concatenatedUrl);
+                        // console.log(baseUrl, concatenatedUrl);
                         res.end(modifiedBody);
                     });
                 }
@@ -70,7 +71,7 @@ export const video = (req, res, next) => {
         cmcdExtractorService(id, req, concatenatedUrl, decodedJson, dateStart)
         
     } catch (error) {
-        console.error(error);
+        log(id, error, 'error');
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };

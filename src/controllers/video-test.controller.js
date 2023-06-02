@@ -3,6 +3,7 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import path from 'path';
 import zlib from 'zlib';
+import log from '../utils/logger.js';
 
 export const videoTest = (req, res, next) => {
     
@@ -54,7 +55,7 @@ export const videoTest = (req, res, next) => {
                             console.log(err);
                         }
                         //modifyManifest
-                        console.log(baseUrl, reqURI);
+                        // console.log(baseUrl, reqURI);
                         res.end(modifiedBody);
                     });
                 }
@@ -67,7 +68,7 @@ export const videoTest = (req, res, next) => {
         cmcdExtractorService(id, req, reqURI, {}, dateStart)
         
     } catch (error) {
-        console.error(error);
+        log(id, error, 'error');
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
