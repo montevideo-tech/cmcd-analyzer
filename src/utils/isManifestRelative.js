@@ -1,5 +1,6 @@
 import jsLogger from 'js-logger';
 import xml2js from 'xml2js';
+import { encodeUrl } from './encodeBse64Concat.js';
 
 const findElement = (obj, elementName, elementPath) => {
     if (typeof obj === 'object') {
@@ -19,7 +20,8 @@ const findElement = (obj, elementName, elementPath) => {
     return null;
   }
 
-const obtainManifestPathMpd = (manifest) => {
+const obtainManifestPathMpd = (manifest, baseUrl) => {
+  let modifiedManifest = manifest;
     const parser = new xml2js.Parser();
     let xmlDoc;
     parser.parseString(manifest, (err, res) => {
@@ -35,27 +37,31 @@ const obtainManifestPathMpd = (manifest) => {
       const res = findElement(xmlDoc, elements[e], elementPath);
       if (res !== null) {
         const videoURL = res instanceof Array ? res[0] : res;
-        return videoURL;
+        if (videoURL.startsWith("http://") || videoURL.startsWith("https://") ){
+        const encodedUrl = encodeUrl(videoURL, baseUrl);
+        modifiedManifest.replace(videoURL, encodedUrl.concatenatedUrl);
+      }
       }
     }
-    return null;
+    return modifiedManifest;
 }
 
-const obtainManifestPathM3u8 = (manifest) => {
+const obtainManifestPathM3u8 = (manifest, baseUrl) => {
     const lines = manifest.split('\n');
     for (let i = 1; i < lines.length; i++) {
-        if (!lines[i].startsWith('#')){
-          return lines[i];
+        if (!lines[i].startsWith('#') && (lines[i].startsWith("http://") || lines[i].startsWith("https://")) ){
+          const encodedUrl = encodeUrl(lines[i], baseUrl);
+          manifest.replace(lines[i], encodedUrl.concatenatedUrl);
         }
     }
-    return null;
+    return manifest;
 }
 
-export const isManifestRelative = (path, content) => {
-    const manifestPath = path.includes('.m3u8') ? obtainManifestPathM3u8(content) : obtainManifestPathMpd(content);
-    if(manifestPath === null){
+export const modifyManifest = (path, content, baseUrl) => {
+    const manifest = path.includes('.m3u8') ? obtainManifestPathM3u8(content, baseUrl) : obtainManifestPathMpd(content, baseUrl);
+    if(manifest === null){
         jsLogger.error('No manifest path found in this manifest.')
     }
-    return ((manifestPath.startsWith("http://") || manifestPath.startsWith("https://")) ? false : true);
+    return manifest;
 }
 
