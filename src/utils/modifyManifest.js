@@ -21,7 +21,6 @@ const findElement = (obj, elementName, elementPath) => {
   }
 
 const obtainManifestPathMpd = (manifest, baseUrl) => {
-  let modifiedManifest = manifest;
     const parser = new xml2js.Parser();
     let xmlDoc;
     parser.parseString(manifest, (err, res) => {
@@ -38,12 +37,12 @@ const obtainManifestPathMpd = (manifest, baseUrl) => {
       if (res !== null) {
         const videoURL = res instanceof Array ? res[0] : res;
         if (videoURL.startsWith("http://") || videoURL.startsWith("https://") ){
-        const encodedUrl = encodeUrl(videoURL, baseUrl);
-        modifiedManifest.replace(videoURL, encodedUrl.concatenatedUrl);
-      }
+          const encodedUrl = encodeUrl(videoURL, baseUrl);
+          manifest = manifest.replace(videoURL, encodedUrl.concatenatedUrl);
+        }
       }
     }
-    return modifiedManifest;
+    return manifest;
 }
 
 const obtainManifestPathM3u8 = (manifest, baseUrl) => {
@@ -51,7 +50,7 @@ const obtainManifestPathM3u8 = (manifest, baseUrl) => {
     for (let i = 1; i < lines.length; i++) {
         if (!lines[i].startsWith('#') && (lines[i].startsWith("http://") || lines[i].startsWith("https://")) ){
           const encodedUrl = encodeUrl(lines[i], baseUrl);
-          manifest.replace(lines[i], encodedUrl.concatenatedUrl);
+          manifest = manifest.replace(lines[i], encodedUrl.concatenatedUrl);
         }
     }
     return manifest;
