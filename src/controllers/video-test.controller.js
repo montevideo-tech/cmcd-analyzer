@@ -1,14 +1,20 @@
 import { VIDEO_TEST_URL } from '../config.js';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
+import path from 'path';
 import zlib from 'zlib';
 
 export const videoTest = (req, res, next) => {
+    
+    const dateStart = new Date().toISOString();
+    const ext = path.extname(req.params[0]);
+    const isManifest = ext === '.m3u8' || ext === '.mpd';
 
     try {
         const proxy = createProxyMiddleware({
             target: VIDEO_TEST_URL,
             changeOrigin: true,
-            selfHandleResponse: true,
+            selfHandleResponse: isManifest,
             pathRewrite: function (path, req) {
 
                 const resPath = path.replace(`/video-test/${req.params.id}/`, '');
@@ -17,35 +23,45 @@ export const videoTest = (req, res, next) => {
             },
             onProxyRes: function (proxyRes, req, res) {
 
-                const headers = proxyRes.headers['content-encoding'];
+                if (isManifest)
+                {
+                    const contentEncoding = proxyRes.headers['content-encoding'];
                 
-                let body = [];
-                proxyRes.on('data', function (chunk) {
-                    body.push(chunk);
-                });            
-
-                proxyRes.on('end', function () {
-                    let modifiedBody = '';
-                    try {
-                        if ( headers === 'gzip') {
-                            const data = zlib.gunzipSync(Buffer.concat(body));
-
-                            modifiedBody = data.toString().toUpperCase();
-                        } else {
-                            modifiedBody = Buffer.concat(body).toString().toUpperCase();
+                    let body = [];
+                    proxyRes.on('data', function (chunk) {
+                        body.push(chunk);
+                    });            
+    
+                    proxyRes.on('end', function () {
+                        let modifiedBody = '';
+                        try {
+                            if ( contentEncoding === 'gzip') {
+                                const data = zlib.gunzipSync(Buffer.concat(body));
+    
+                                modifiedBody = data.toString();
+                            } else if (contentEncoding === 'br') {
+                                const data = zlib.brotliDecompressSync(Buffer.concat(body));
+                                modifiedBody = data.toString();
+                            }
+                            else {
+                                modifiedBody = Buffer.concat(body).toString();
+                            }
                         }
-                    }
-                    catch (err) {
-                        console.log(err);
-                    }
-                    res.end(modifiedBody);
-                });
+                        catch (err) {
+                            console.log(err);
+                        }
+                        //modifyManifest
+                        res.end(modifiedBody);
+                    });
+                }
 
             }
 
         });
 
         proxy(req, res, next);
+        const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
+        cmcdExtractorService(req, reqURI, {}, dateStart)
         
     } catch (error) {
         console.error(error);
