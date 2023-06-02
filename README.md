@@ -153,7 +153,7 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 There's a dashboard example, to make it available on kibana, run: 
 (make sure you have the environment running with docker compose before run the script)
  
- ```` cd kibana && ./kibana/kibanaTemplate.sh ````
+ ```` cd kibana && ./kibanaTemplate.sh ````
 
 DataView Name: CMCD-Data
 
