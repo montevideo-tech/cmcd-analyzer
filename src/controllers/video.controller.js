@@ -13,6 +13,7 @@ export const video = (req, res, next) => {
     const jsonBase64 = req.params['jsonbase64'];
     const videoURL = req.params[0];
     const {concatenatedUrl, decodedJson}  = decodeBase64AndConcat(jsonBase64, videoURL);
+    const baseUrl = `${req.protocol}://${req.get('host')}/video/${id}/`;
 
     try {
         const proxy = createProxyMiddleware({
@@ -56,7 +57,7 @@ export const video = (req, res, next) => {
                             console.log(err);
                         }
                         //modifyManifest
-                        console.log(modifiedBody);
+                        console.log(baseUrl, concatenatedUrl);
                         res.end(modifiedBody);
                     });
                 }

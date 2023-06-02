@@ -10,6 +10,8 @@ export const videoTest = (req, res, next) => {
     const {id} = req.params;
     const ext = path.extname(req.params[0]);
     const isManifest = ext === '.m3u8' || ext === '.mpd';
+    const baseUrl = `${req.protocol}://${req.get('host')}/video-test/${id}/`;
+    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
 
     try {
         const proxy = createProxyMiddleware({
@@ -52,6 +54,7 @@ export const videoTest = (req, res, next) => {
                             console.log(err);
                         }
                         //modifyManifest
+                        console.log(baseUrl, reqURI);
                         res.end(modifiedBody);
                     });
                 }
@@ -61,7 +64,6 @@ export const videoTest = (req, res, next) => {
         });
 
         proxy(req, res, next);
-        const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
         cmcdExtractorService(id, req, reqURI, {}, dateStart)
         
     } catch (error) {
