@@ -7,6 +7,7 @@ import zlib from 'zlib';
 export const videoTest = (req, res, next) => {
     
     const dateStart = new Date().toISOString();
+    const {id} = req.params;
     const ext = path.extname(req.params[0]);
     const isManifest = ext === '.m3u8' || ext === '.mpd';
 
@@ -61,7 +62,7 @@ export const videoTest = (req, res, next) => {
 
         proxy(req, res, next);
         const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
-        cmcdExtractorService(req, reqURI, {}, dateStart)
+        cmcdExtractorService(id, req, reqURI, {}, dateStart)
         
     } catch (error) {
         console.error(error);

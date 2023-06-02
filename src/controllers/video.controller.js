@@ -7,6 +7,7 @@ import zlib from 'zlib';
 export const video = (req, res, next) => {
     
     const dateStart = new Date().toISOString();
+    const {id} = req.params;
     const ext = path.extname(req.params[0]);
     const isManifest = ext === '.m3u8' || ext === '.mpd';
     const jsonBase64 = req.params['jsonbase64'];
@@ -65,7 +66,7 @@ export const video = (req, res, next) => {
         });
 
         proxy(req, res, next);
-        cmcdExtractorService(req, concatenatedUrl, decodedJson, dateStart)
+        cmcdExtractorService(id, req, concatenatedUrl, decodedJson, dateStart)
         
     } catch (error) {
         console.error(error);

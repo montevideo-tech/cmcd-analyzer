@@ -1,15 +1,9 @@
 import getCMCDRequestType from '../utils/getCMCDRequestType.js'
 import { getCMCDParameter } from '../utils/getCMCDParameter.js';
 import { cmcdValidator } from '../utils/cmcdValidator.js';
-import jsLogger from 'js-logger';
-import saveData from '../utils/saveData.js';
+import { saveData } from '../utils/saveData.js';
 
-
-export const cmcdExtractorService = async (req, reqURI, decodedJson, dateStart) => {
-    jsLogger.useDefaults({ defaultLevel: jsLogger.TRACE });
-    const id = req.params['id'];
-    const newHeaders = {...req.headers};
-    delete newHeaders.host;
+export const cmcdExtractorService = async (id, req, reqURI, decodedJson, dateStart) => {
     const body = {};
     
     // reqest validation
@@ -31,6 +25,5 @@ export const cmcdExtractorService = async (req, reqURI, decodedJson, dateStart) 
     body['cmcd_keys'] = validatorRes.parsedData;
     body['cmcd_data'] = validatorRes.rawData;
     
-    jsLogger.info(`${id}: Saving data into the database...`)
-    // saveData(id, body);
+    saveData(id, body);
 }
