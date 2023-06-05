@@ -1,6 +1,7 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import { decodeBase64AndConcat } from '../utils/decodeBse64Concat.js'
+import { modifyManifest } from '../utils/modifyManifest.js';
 import path from 'path';
 import zlib from 'zlib';
 import log from '../utils/logger.js';
@@ -39,27 +40,28 @@ export const video = (req, res, next) => {
                     });            
     
                     proxyRes.on('end', function () {
-                        let modifiedBody = '';
+                        let manifest = '';
                         try {
                             if (contentEncoding === 'gzip') {
                                 const data = zlib.gunzipSync(Buffer.concat(body));
     
-                                modifiedBody = data.toString();
+                                manifest = data.toString();
                             }
                             else if (contentEncoding === 'br') {
                                 const data = zlib.brotliDecompressSync(Buffer.concat(body));
-                                modifiedBody = data.toString();
+                                manifest = data.toString();
                             }
                             else {
-                                modifiedBody = Buffer.concat(body).toString();
+                                manifest = Buffer.concat(body).toString();
                             }
+                            manifest = modifyManifest(concatenatedUrl, manifest, baseUrl, decodedJson);
                         }
                         catch (err) {
                             console.log(err);
                         }
                         //modifyManifest
                         // console.log(baseUrl, concatenatedUrl);
-                        res.end(modifiedBody);
+                        res.end(manifest);
                     });
                 }
 
@@ -68,7 +70,7 @@ export const video = (req, res, next) => {
         });
 
         proxy(req, res, next);
-        cmcdExtractorService(id, req, concatenatedUrl, decodedJson, dateStart)
+        // cmcdExtractorService(id, req, concatenatedUrl, decodedJson, dateStart)
         
     } catch (error) {
         log(id, error, 'error');
