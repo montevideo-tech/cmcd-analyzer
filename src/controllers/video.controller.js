@@ -1,7 +1,8 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { createProxyMiddleware, responseInterceptor } from 'http-proxy-middleware';
 import { cmcdExtractorService } from '../services/cmcd-extractor.service.js';
 import { decodeBase64AndConcat } from '../utils/decodeBse64Concat.js'
 import { modifyManifest } from '../utils/modifyManifest.js';
+import { encodeUrl } from '../utils/encodeBse64Concat.js'
 import path from 'path';
 import zlib from 'zlib';
 import log from '../utils/logger.js';
@@ -10,14 +11,14 @@ export const video = (req, res, next) => {
     
     const dateStart = new Date().toISOString();
     const {id} = req.params;
-    const ext = path.extname(req.params[0]);
-    const isManifest = ext === '.m3u8' || ext === '.mpd';
-    const jsonBase64 = req.params['jsonbase64'];
-    const videoURL = req.params[0];
-    const {concatenatedUrl, decodedJson}  = decodeBase64AndConcat(jsonBase64, videoURL);
-    const baseUrl = `${req.protocol}://${req.get('host')}/video/${id}/`;
-
     try {
+        const ext = path.extname(req.params[0]);
+        const isManifest = ext === '.m3u8' || ext === '.mpd';
+        const jsonBase64 = req.params['jsonbase64'];
+        const videoURL = req.params[0];
+        const {concatenatedUrl, decodedJson}  = decodeBase64AndConcat(jsonBase64, videoURL);
+        const baseUrl = `${req.protocol}://${req.get('host')}/video/${id}/`;
+
         const proxy = createProxyMiddleware({
             target: decodedJson.url,
             changeOrigin: true,
@@ -28,44 +29,41 @@ export const video = (req, res, next) => {
 
                 return resPath;
             },
-            onProxyRes: function (proxyRes, req, res) {
-
-                if (isManifest)
-                {
-                    const contentEncoding = proxyRes.headers['content-encoding'];
-                
-                    let body = [];
-                    proxyRes.on('data', function (chunk) {
-                        body.push(chunk);
-                    });            
-    
-                    proxyRes.on('end', function () {
-                        let manifest = '';
-                        try {
-                            if (contentEncoding === 'gzip') {
-                                const data = zlib.gunzipSync(Buffer.concat(body));
-    
-                                manifest = data.toString();
-                            }
-                            else if (contentEncoding === 'br') {
-                                const data = zlib.brotliDecompressSync(Buffer.concat(body));
-                                manifest = data.toString();
-                            }
-                            else {
-                                manifest = Buffer.concat(body).toString();
-                            }
+            onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
+                    
+                switch (proxyRes.statusCode) {
+                    case 200:
+                        if (isManifest) {
+                            let manifest = '';
+                            manifest = responseBuffer.toString();                            
                             manifest = modifyManifest(concatenatedUrl, manifest, baseUrl, decodedJson);
+                            return manifest;
+                        } else {
+                            return responseBuffer;
                         }
-                        catch (err) {
-                            console.log(err);
-                        }
-                        //modifyManifest
-                        // console.log(baseUrl, concatenatedUrl);
-                        res.end(manifest);
-                    });
-                }
+                            
+                    // eslint-disable-next-line no-unreachable
+                    break;
 
-            }
+                    case 302:
+                        // eslint-disable-next-line no-case-declarations
+                        const newLocation = encodeUrl(proxyRes.headers['location'], baseUrl, decodedJson);
+
+                        res.statusCode = proxyRes.statusCode;
+                        res.setHeader('location', newLocation.concatenatedUrl);
+                        return responseBuffer;
+                    // eslint-disable-next-line no-unreachable
+                    break;
+                    case 301:
+                    // ...
+                    break;
+
+                    default:
+                        res.statusCode = proxyRes.statusCode;
+                        return responseBuffer; 
+                }
+                
+            }),
 
         });
 
