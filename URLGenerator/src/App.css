@@ -5,12 +5,33 @@
   text-align: center;
 }
 
+body {
+  background-image: url(https://stage.montevideotech.dev/static/media/background.bd8912f09753f045d141.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: #2d1674;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
 .logo {
+  width: 400px; /* Ajusta el tamaño del logo según tus necesidades */
+  height: auto;
+  margin-top: 50px; /* Ajusta el margen superior según tus necesidades */
+}
+
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
+} */
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
@@ -41,13 +62,30 @@
   color: #888;
 }
 
-.input-field {
-  width: 100px;
-  height: 30px;
-  font-size: 16px;
-  padding: 5px;
-  box-sizing: border-box;
-  border: 1px solid black;
-  border-radius: 5px;
-  margin-right: 5px;
+.container-box {
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta el nivel de transparencia modificando el último valor */
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
 }
+
+.custom-button {
+  background-color: #4dbaac;
+  color: white;
+}
+
+
+/* .input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.input-section input {
+  margin-bottom: 10px;
+}
+
+.url-section {
+  margin-top: 20px;
+} */
