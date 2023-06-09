@@ -49,7 +49,7 @@ export const video = (req, res, next) => {
                 onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
                     const statusCode = proxyRes.statusCode;
 
-                    const baseUrl = `${req.protocol}://${req.get('host')}/video/${id}/`;
+                    const baseUrl = `${req.protocol}://${req.get('host')}/video/${req.params.id}/`;
                     const ext = path.extname(req.params[0]);
                     const isManifest = ext === '.m3u8' || ext === '.mpd';
                     const jsonBase64 = req.params['jsonbase64'];
