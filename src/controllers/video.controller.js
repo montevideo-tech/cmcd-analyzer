@@ -26,13 +26,13 @@ const proxyCache = {
 
 export const video = (req, res, next) => {
     
-    const dateStart = new Date().toISOString();
+    req.dateStart = new Date().toISOString();
     const {id} = req.params;
     try {
 
         const videoURL = req.params[0];
         const jsonBase64 = req.params['jsonbase64'];
-        const {concatenatedUrl, decodedJson}  = decodeBase64AndConcat(jsonBase64, videoURL);
+        const { decodedJson }  = decodeBase64AndConcat(jsonBase64, videoURL);
 
         let proxy = proxyCache.getProxy(decodedJson.url);
         if (!proxy) {
@@ -41,13 +41,12 @@ export const video = (req, res, next) => {
                 changeOrigin: true,
                 selfHandleResponse: true,
                 pathRewrite: (path, req) => {
-
                     const resPath = path.replace(`/video/${req.params.id}/${req.params.jsonbase64}`, '');
-
                     return resPath;
                 },
                 onProxyRes: responseInterceptor(async (responseBuffer, proxyRes, req, res) => {
                     const statusCode = proxyRes.statusCode;
+                    const dateStart = req.dateStart;
 
                     const baseUrl = `${req.protocol}://${req.get('host')}/video/${req.params.id}/`;
                     const ext = path.extname(req.params[0]);
@@ -55,30 +54,32 @@ export const video = (req, res, next) => {
                     const jsonBase64 = req.params['jsonbase64'];
                     const videoURL = req.params[0];
                     const {concatenatedUrl, decodedJson} = decodeBase64AndConcat(jsonBase64, videoURL);
-                    
+                    var response = '';
                     if (statusCode === 200 && isManifest) {
                         let manifest = '';
                         manifest = responseBuffer.toString();                            
                         manifest = modifyManifest(concatenatedUrl, manifest, baseUrl, decodedJson);
-                        return manifest;  
+                        response = manifest;  
                     } else if (statusCode === 301 || statusCode === 302) {
                         const { concatenatedUrl } = encodeUrl(proxyRes.headers['location'], baseUrl, decodedJson);
 
                         res.statusCode = proxyRes.statusCode;
                         res.setHeader('location', concatenatedUrl);
-                        return responseBuffer;
+                        response = responseBuffer;
                     } else {
                         res.statusCode = proxyRes.statusCode;
                         res.headers = proxyRes.headers;
-                        return responseBuffer;
+                        response = responseBuffer;
                     }
+                    
+                    cmcdExtractorService({id, req, concatenatedUrl, decodedJson, dateStart});
+                    return response;
                 }),
             });
             proxyCache.addProxy(decodedJson.url, proxy);
         }
 
         proxy(req, res, next);
-        // cmcdExtractorService(id, req, concatenatedUrl, decodedJson, dateStart)
         
     } catch (error) {
         log(id, error, 'error');

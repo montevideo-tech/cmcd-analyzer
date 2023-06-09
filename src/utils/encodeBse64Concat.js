@@ -8,5 +8,4 @@ export const encodeUrl= (url, baseUrl, decodedJson) => {
     const concatenatedUrl = baseUrl + encodedUrl + "/" + fileName;
     
     return {concatenatedUrl, encodedUrl};
-    
 };
