@@ -1,0 +1,8 @@
+.url-text {
+  color: white;
+}
+
+.url-container {
+  max-height: 200px; /* Ajusta la altura máxima según tus necesidades */
+  overflow: auto; /* Habilita la barra de desplazamiento si el contenido se desborda */
+}
