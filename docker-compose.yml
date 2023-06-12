@@ -100,8 +100,8 @@ services:
   
   cmcd-extractor-container: 
    build:
-    context: .
-    dockerfile: Dockerfile
+    context: ./cmcd-extractor
+    dockerfile: ./cmcd-extractor/Dockerfile
    command: bash -c "cd code && npm i && npm run dev"
    ports: 
     - 3000:3000
@@ -110,10 +110,12 @@ services:
     - ELASTICSEARCH_PORT=9200
    networks:
     - elk
+   env_file:
+    - .env
    stdin_open: true 
    tty: true 
    volumes: 
-     - ./:/code
+     - ./cmcd-extractor:/code
    depends_on:
      - elasticsearch
 
