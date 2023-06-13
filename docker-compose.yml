@@ -117,16 +117,19 @@ services:
    depends_on:
      - elasticsearch
 
-  analyzer-dashboard:
-    build:
-      context: analyzerDashboard/
-      dockerfile: analyzerDashboard/Dockerfile
-      port: 
-        - 5173:5173
-      networks:
-        - elk
-      volumes: 
-        - ./analyzerDashboard:/code
+  cmcd-dashboards-setup-container: 
+   build:
+    context: ./analyzerDashboard
+    dockerfile: Dockerfile
+   command: bash -c "cd code && ls && npm i && npm run dev"
+   ports: 
+    - 5173:5173
+   networks:
+    - elk
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./analyzerDashboard/:/code
 
 networks:
   elk:
