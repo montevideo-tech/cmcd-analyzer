@@ -16,7 +16,7 @@ function URLGenerator() {
   const [val, setVal] = useState('');
   const [generatedURL, setGeneratedURL] = useState('');
   const [field1Error, setField1Error] = useState(false);
-  const [json, setJson] = useState({});
+  const [objList, setobjList] = useState([{key: '', val: ''}]);
   const [keyError, setKeyError] = useState(false);
   const [valError, setValError] = useState(false);
 
@@ -33,21 +33,21 @@ function URLGenerator() {
     setPort(event.target.value);
   };
 
-  const handleKeyChange = (event) => {
-    setKey(event.target.value);
-    setKeyError(false);
-  };
-
-  const handleValChange = (event) => {
-    setVal(event.target.value);
-    setValError(false);
-  };
+  const listToJson = () => {
+    const jsonData = objList.reduce((acc, field) => {
+      if(acc[field.key] !== ''){
+        acc[field.key] = field.val;
+      }
+      return acc;
+    }, {});
+    return jsonData;
+  }
 
   const encodeToBase64 = (val) => {
-    let obj = json;
+    let obj = listToJson();
     obj.url = val;
-    setJson(obj);
-    const encodedValue = window.btoa(JSON.stringify(json));
+    console.log(obj);
+    const encodedValue = window.btoa(JSON.stringify(obj));
     return encodedValue;
   }
 
@@ -55,7 +55,7 @@ function URLGenerator() {
     const elems = val.split('/');
     const first = elems.pop();
     const second = elems.join('/') + '/';
-    return (encodeToBase64(second, json) + '/' + first);
+    return (encodeToBase64(second) + '/' + first);
   }
 
 
@@ -67,11 +67,19 @@ function URLGenerator() {
       setField1Error(true);
     }
     else {
-      console.log(json);
       const url = `http://${ipValue}:${portValue}/video/${uuid}/${divideURL(field1)}`;
       setGeneratedURL(url);
     }
   };
+
+  const handleInpuChange = (e, index, field) => {
+    const newData = [...objList];
+    newData[index][field] = e.target.value;
+    (field == 'key') ? setKey(e.target.value) : setVal(e.target.value);
+    setobjList(newData);
+    (field == 'key') ? setKeyError(false) : setValError(false);
+  }
+
 
   const handleAddNewObject = () => {
     if (!key) {
@@ -81,10 +89,8 @@ function URLGenerator() {
       setValError(true);
     }
     else {
-      let obj = json;
-      obj[key] = val;
-      setJson(obj);
-      console.log(json);
+      const newObj = [...objList, {key: '', val: ''}];
+      setobjList(newObj);
     }
   }
   
@@ -109,14 +115,13 @@ function URLGenerator() {
             </div>
             <hr className="divider" />
             <div className='row'>
-              {/* <h5 style={{ color: 'white' }} >Optional fields: </h5> */}
               <div className='col'>
                 <div className="row">
                   <div className="col">
                     <InputField 
                       value={ip}
                       onChange={handleIpChange}
-                      placeholder="file"
+                      placeholder="ip"
                       name="IP: "
                     />
                     <span></span>
@@ -125,7 +130,7 @@ function URLGenerator() {
                     <InputField 
                       value={port}
                       onChange={handlePortChange}
-                      placeholder="ip"
+                      placeholder="port"
                       name="Port: "
                     />
                     <span></span>
@@ -137,45 +142,46 @@ function URLGenerator() {
               The default ip and port will be localhost:3000 if no other value is assigned.
             </h6>
             <hr className="divider" />
-            {/* <h6 style={{ color: 'white' }}>
-              The following fields can be used to add any additional information to the generated URL.
-              The information will be in json format which will be encoded inside the URL.
-            </h6> */}
-            <div className='row'>
-              {/* <h5 style={{ color: 'white' }} >Optional fields: </h5> */}
-              {/*agregar texto de que hacer para eliminar y agregar  */}
-              <div className='col'>
-                <div className="row">
-                  <div className="col">
-                    <InputField 
-                      value={key}
-                      onChange={handleKeyChange}
-                      placeholder="key"
-                      name="Key: "
-                      error={keyError}
-                      message='Enter this field.'
-                    />
-                    <span></span>
+
+            {objList.map((item, index) => (
+              <div key={index}>
+                {/* <div className='row'>
+                  <div className='col'> */}
+                    <div className="row">
+                      <div className="col">
+                        <InputField 
+                          value={item.key}
+                          onChange={(e) => handleInpuChange(e, index, 'key')}
+                          placeholder="key"
+                          name="Key: "
+                          error={keyError}
+                          message='Enter this field.'
+                        />
+                        <span></span>
+                      </div>
+                      <div className="col">
+                        <InputField 
+                          value={item.val}
+                          onChange={(e) => handleInpuChange(e, index, 'val')}
+                          placeholder="value"
+                          name="Value: "
+                          error={valError}
+                          message='Enter this field.'
+                        />
+                        <span></span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="col">
-                    <InputField 
-                      value={val}
-                      onChange={handleValChange}
-                      placeholder="value"
-                      name="Value: "
-                      error={valError}
-                      message='Enter this field.'
-                    />
-                    <span></span>
+              //   </div>
+              // </div>
+            ))}
+
+                <div className='row'>
+                  <div className='col'>
+                    <URLGenerateButton onClick={handleAddNewObject} name="Add new object"/>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='col'>
-                <URLGenerateButton onClick={handleAddNewObject} name="Add new object"/>
-              </div>
-            </div>
+
             <hr className="divider" />
             <div className='row'>
               <div className='col'>
