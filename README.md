@@ -150,7 +150,7 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
 **Load dashboard template example:**
 
-There's a dashboard example, it's loaded by default on kibana:
+There's a dashboard example loaded on kibana:
  
 DataView Name: CMCD-Data
 
