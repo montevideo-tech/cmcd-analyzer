@@ -117,6 +117,17 @@ services:
    depends_on:
      - elasticsearch
 
+  analyzer-dashboard:
+    build:
+      context: analyzerDashboard/
+      dockerfile: analyzerDashboard/Dockerfile
+      port: 
+        - 5173:5173
+      networks:
+        - elk
+      volumes: 
+        - ./analyzerDashboard:/code
+
 networks:
   elk:
     driver: bridge

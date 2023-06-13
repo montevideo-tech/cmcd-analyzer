@@ -66,7 +66,6 @@ function URLGenerator() {
     if (!field1) {
       setField1Error(true);
     }
-    // setField1Error(false);
     else {
       console.log(json);
       const url = `http://${ipValue}:${portValue}/video/${uuid}/${divideURL(field1)}`;
