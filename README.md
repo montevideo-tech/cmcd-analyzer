@@ -150,11 +150,8 @@ http://localhost:3000/video/1/ew0KIOKAnHVybOKAnTog4oCcaHR0cHM6Ly9keGNsajl2cDNtND
 
 **Load dashboard template example:**
 
-There's a dashboard example, to make it available on kibana run the following command in another command line: 
+There's a dashboard example loaded on kibana:
  
- ```` cd kibana && ./kibanaTemplate.sh ````
->  **_NOTE:_** Make sure you have the environment running with docker compose before run the script.
-
 DataView Name: CMCD-Data
 
 Dashboard Name: DashBoard
