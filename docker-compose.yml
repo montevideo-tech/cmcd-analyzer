@@ -89,7 +89,7 @@ services:
    depends_on:
      - elasticsearch
 
-  cmcd-dashboard: 
+  cmcd-dashboard-container: 
    build:
     context: ./analyzerDashboard
     dockerfile: Dockerfile
@@ -103,7 +103,7 @@ services:
    volumes: 
      - ./analyzerDashboard/:/code
 
-  kibana-dashboards-setup: 
+  kibana-dashboards-setup-container: 
    build:
     context: kibana/setdashboards/
     dockerfile: Dockerfile
