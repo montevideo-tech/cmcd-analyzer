@@ -3,7 +3,7 @@ import { getCMCDParameter } from '../utils/getCMCDParameter.js';
 import { cmcdValidator } from '../utils/cmcdValidator.js';
 import { saveData } from '../utils/saveData.js';
 
-export const cmcdExtractorService = async (id, req, reqURI, decodedJson, dateStart) => {
+export const cmcdExtractorService = async ({id, req, reqURI, decodedJson, dateStart}) => {
     const body = {};
     
     // reqest validation
@@ -17,8 +17,10 @@ export const cmcdExtractorService = async (id, req, reqURI, decodedJson, dateSta
     body['received_datetime'] = dateStart;
     body['returned_datetime'] = new Date().toISOString(); 
     body['cdn_request_url'] = reqURI;
-    delete decodedJson.url;
-    Object.assign(body, decodedJson);
+    if (decodedJson) {
+        delete decodedJson.url;
+        Object.assign(body, decodedJson);
+    }
     body.valid = validatorRes.valid;
     body.errors = validatorRes.errors;
     body.warnings = validatorRes.warnings;
