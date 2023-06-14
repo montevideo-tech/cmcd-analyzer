@@ -1,0 +1,89 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  body {
+    background-image: url(https://stage.montevideotech.dev/static/media/background.bd8912f09753f045d141.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #2d1674;
+  }
+  
+  .app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  .logo {
+    width: 400px; 
+    height: auto;
+    margin-top: 50px; 
+  }
+
+  .logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  .logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+  }
+  
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+  
+  .card {
+    padding: 2em;
+  }
+  
+  .read-the-docs {
+    color: #888;
+  }
+  
+  .container-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+  }
+  
+  .custom-button {
+    background-color: #4dbaac;
+    color: white;
+  }
+  
+  .divider {
+    border-color: white;
+    border-width: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .remove-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
+  }
+
+  .close-icon {
+    color: #4dbaac;
+  }
