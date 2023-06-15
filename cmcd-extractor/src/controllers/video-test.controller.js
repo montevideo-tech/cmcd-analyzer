@@ -43,7 +43,7 @@ export const videoTest = (req, res, next) => {
     
     const dateStart = new Date().toISOString();
     const {id} = req.params;
-    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
+    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}`;
 
     try {
         proxy(req, res, next);

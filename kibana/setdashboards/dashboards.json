@@ -71,11 +71,11 @@
         "fieldAttrs": "{\"cmcd_keys.br\":{\"count\":1},\"cmcd_keys.ot\":{\"count\":1}}",
         "fieldFormatMap": "{}",
         "fields": "[]",
-        "name": "CMCD-Data",
+        "name": "cmcd-*",
         "runtimeFieldMap": "{}",
         "sourceFilters": "[]",
         "timeFieldName": "received_datetime",
-        "title": "1",
+        "title": "cmcd-*",
         "typeMeta": "{}"
       },
       "references": [],
