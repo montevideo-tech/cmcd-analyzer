@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './URLGenerator.css';
 import InputField from '../InputField/InputFields';
-import URLGenerateButton from '../Button/URLGenerateButton';
 import DisplayedURL from '../DisplayedURL/DisplayedURL';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuidv4 } from 'uuid';
