@@ -86,110 +86,95 @@ function URLGenerator() {
   };
   
   return (
-    <div className="app">
-      <img src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-1.png" alt="Logo" className="logo" />
-      
-      <div className="container-box">
-        <div className='container'>
-            <div className='row'>
-              <div className='col'>
-                <InputField
-                  value={field1}
-                  onChange={handleField1Change}
-                  placeholder='VideoURL: '
-                  name="VideoURL: "
-                  error={field1Error}
-                  message='Please provide a valid video URL.'
-                />
-                <span></span>
-              </div>
-            </div>
-            <hr className="divider" />
-            <div className='row'>
-              <div className='col'>
-                <div className="row">
-                  <div className="col">
-                    <InputField 
-                      value={ip}
-                      onChange={handleIpChange}
-                      placeholder="ip"
-                      name="IP: "
-                    />
-                    <span></span>
-                  </div>
-                  <div className="col">
-                    <InputField 
-                      value={port}
-                      onChange={handlePortChange}
-                      placeholder="port"
-                      name="Port: "
-                    />
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h6 style={{ color: 'white' }}>
-              The default ip and port will be localhost:3000 if no other value is assigned.
-            </h6>
-            <hr className="divider" />
-
-            {objList.map((item, index) => (
-              <div key={index}>
-                <div className="row">
-                  <div className="col-5">
-                    <InputField 
-                      value={item.key}
-                      onChange={(e) => handleInpuChange(e, index, 'key')}
-                      placeholder="key"
-                      name="Key: "
-                      message='Enter this field.'
-                    />
-                    <span></span>
-                  </div>
-                  <div className="col-5">
-                    <InputField 
-                      value={item.val}
-                      onChange={(e) => handleInpuChange(e, index, 'val')}
-                      placeholder="value"
-                      name="Value: "
-                      message='Enter this field.'
-                    />
-                    <span></span>
-                  </div>
-                  <div className="col-1 d-flex align-items-center justify-content-center">
-                    <button className="remove-button" onClick={() => handleRemoveField(index)}>
-                      <IoMdCloseCircle className="close-icon" size={24}/>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-                <div className='row'>
-                  <div className='col'>
-                    <button className="custom-button" onClick={handleAddNewObject}>Add new object</button>;
-                  </div>
-                </div>
-
-            <hr className="divider" />
-            <div className='row'>
-              <div className='col'>
-                <button className="custom-button" onClick={handleGenerateURL}>Generate URL</button>;
-              </div>
-            </div>
-            <div className="row mt-3">
-              <div className='col'>
-                <DisplayedURL generatedURL={generatedURL}/>
-              </div>
-            </div>
-    
+    <div className="container-box">
+        <div className='row'>
+          <div className='col'>
+            <InputField
+              value={field1}
+              onChange={handleField1Change}
+              placeholder='VideoURL: '
+              name="VideoURL: "
+              error={field1Error}
+              message='Please provide a valid video URL.'
+            />
+          </div>
         </div>
-      </div>
-    
+        <hr className="divider" />
+        <div className='row'>
+          <div className='col'>
+            <div className="row">
+              <div className="col">
+                <InputField 
+                  value={ip}
+                  onChange={handleIpChange}
+                  placeholder="ip"
+                  name="IP: "
+                />
+              </div>
+              <div className="col">
+                <InputField 
+                  value={port}
+                  onChange={handlePortChange}
+                  placeholder="port"
+                  name="Port: "
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <h6 style={{ color: 'white' }}>
+          The default ip and port will be localhost:3000 if no other value is assigned.
+        </h6>
+        <hr className="divider" />
+
+        {objList.map((item, index) => (
+          <div key={index}>
+            <div className="row">
+              <div className="col-5">
+                <InputField 
+                  value={item.key}
+                  onChange={(e) => handleInpuChange(e, index, 'key')}
+                  placeholder="key"
+                  name="Key: "
+                  message='Enter this field.'
+                />
+              </div>
+              <div className="col-5">
+                <InputField 
+                  value={item.val}
+                  onChange={(e) => handleInpuChange(e, index, 'val')}
+                  placeholder="value"
+                  name="Value: "
+                  message='Enter this field.'
+                />
+              </div>
+              <div className="col-1 d-flex align-items-center justify-content-center">
+                <button className="remove-button" onClick={() => handleRemoveField(index)}>
+                  <IoMdCloseCircle className="close-icon" size={24}/>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+        
+        <div className='row'>
+          <div className='col'>
+            <button className="custom-button" onClick={handleAddNewObject}>Add new object</button>;
+          </div>
+        </div>
+        <hr className="divider" />
+        <div className='row'>
+          <div className='col'>
+            <button className="custom-button" onClick={handleGenerateURL}>Generate URL</button>;
+          </div>
+        </div>
+        <div className="row mt-3">
+          <div className='col'>
+            <DisplayedURL generatedURL={generatedURL}/>
+          </div>
+        </div>
     </div>
   );
-
 }
 
 
