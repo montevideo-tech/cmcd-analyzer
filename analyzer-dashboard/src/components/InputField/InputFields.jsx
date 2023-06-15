@@ -6,7 +6,7 @@ import './InputFields.css'
 function InputField({ value, onChange, placeholder, name, error, message }) {
   return (
     <InputGroup className="mb-3" htmlFor="formBasic">
-        <InputGroup.Text className="custom-input-group-text" id="basic-addon1" >{name}</InputGroup.Text>
+        <InputGroup.Text className="custom-input-group-text" >{name}</InputGroup.Text>
         <Form.Control
           value={value}
           onChange={onChange}

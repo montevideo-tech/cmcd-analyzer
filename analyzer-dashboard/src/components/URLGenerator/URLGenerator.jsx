@@ -55,7 +55,7 @@ function URLGenerator() {
 
 
   const handleGenerateURL = () => {
-    const uuid = uuidv4();
+    const uuid = uuidv4().replaceAll('-','');
     const ipValue = ip ? ip : "localhost";
     const portValue = port ? port : "3000";
     if (!field1) {
