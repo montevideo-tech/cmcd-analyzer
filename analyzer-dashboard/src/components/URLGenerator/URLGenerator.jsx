@@ -13,13 +13,9 @@ function URLGenerator() {
   const [field1, setField1] = useState('');
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
-  const [key, setKey] = useState('');
-  const [val, setVal] = useState('');
   const [generatedURL, setGeneratedURL] = useState('');
   const [field1Error, setField1Error] = useState(false);
   const [objList, setobjList] = useState([{key: '', val: ''}]);
-  const [keyError, setKeyError] = useState(false);
-  const [valError, setValError] = useState(false);
 
   const handleField1Change = (event) => {
     setField1(event.target.value);
@@ -75,37 +71,19 @@ function URLGenerator() {
   const handleInpuChange = (e, index, field) => {
     const newData = [...objList];
     newData[index][field] = e.target.value;
-    (field == 'key') ? setKey(e.target.value) : setVal(e.target.value);
     setobjList(newData);
-    (field == 'key') ? setKeyError(false) : setValError(false);
   }
 
 
   const handleAddNewObject = () => {
-    if (!key) {
-      setKeyError(true);
-    }
-    else if (!val) {
-      setValError(true);
-    }
-    else {
-      const newObj = [...objList, {key: '', val: ''}];
-      setobjList(newObj);
-    }
+    const newObj = [...objList, {key: '', val: ''}];
+    setobjList(newObj);
   }
 
   const handleRemoveField = (index) => {
-    if (!key) {
-      setKeyError(true);
-    }
-    else if (!val) {
-      setValError(true);
-    }
-    else {
-      const newFields = [...objList];
-      newFields.splice(index, 1);
-      setobjList(newFields);
-    }
+    const newFields = [...objList];
+    newFields.splice(index, 1);
+    setobjList(newFields);
   };
   
   return (
@@ -166,7 +144,6 @@ function URLGenerator() {
                       onChange={(e) => handleInpuChange(e, index, 'key')}
                       placeholder="key"
                       name="Key: "
-                      error={keyError}
                       message='Enter this field.'
                     />
                     <span></span>
@@ -177,7 +154,6 @@ function URLGenerator() {
                       onChange={(e) => handleInpuChange(e, index, 'val')}
                       placeholder="value"
                       name="Value: "
-                      error={valError}
                       message='Enter this field.'
                     />
                     <span></span>
@@ -193,14 +169,14 @@ function URLGenerator() {
 
                 <div className='row'>
                   <div className='col'>
-                    <URLGenerateButton onClick={handleAddNewObject} name="Add new object"/>
+                    <button className="custom-button" onClick={handleAddNewObject}>Add new object</button>;
                   </div>
                 </div>
 
             <hr className="divider" />
             <div className='row'>
               <div className='col'>
-                <URLGenerateButton onClick={handleGenerateURL} name="Generate URL"/>
+                <button className="custom-button" onClick={handleGenerateURL}>Generate URL</button>;
               </div>
             </div>
             <div className="row mt-3">
