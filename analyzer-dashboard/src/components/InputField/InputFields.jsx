@@ -1,4 +1,3 @@
-import React from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import './InputFields.css'
@@ -6,7 +5,7 @@ import './InputFields.css'
 function InputField({ value, onChange, placeholder, name, error, message }) {
   return (
     <InputGroup className="mb-3" htmlFor="formBasic">
-        <InputGroup.Text className="custom-input-group-text" >{name}</InputGroup.Text>
+        <InputGroup.Text className="custom-input-group-text">{name}</InputGroup.Text>
         <Form.Control
           value={value}
           onChange={onChange}
