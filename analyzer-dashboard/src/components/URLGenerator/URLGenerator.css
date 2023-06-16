@@ -1,0 +1,38 @@
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+ 
+  .container-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+  }
+  
+  .custom-button {
+    background-color: #4dbaac;
+    color: white;
+  }
+  
+  .divider {
+    border-color: white;
+    border-width: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .remove-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
+  }
+
+  .close-icon {
+    color: #4dbaac;
+  }

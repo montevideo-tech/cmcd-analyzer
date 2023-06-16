@@ -89,7 +89,21 @@ services:
    depends_on:
      - elasticsearch
 
-  cmcd-dashboards-setup-container: 
+  analyzer-dashboard-container: 
+   build:
+    context: ./analyzer-dashboard
+    dockerfile: Dockerfile
+   command: bash -c "cd code && npm i && npm run dev"
+   ports: 
+    - 5173:5173
+   networks:
+    - elk
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./analyzer-dashboard/:/code
+
+  kibana-dashboards-setup-container: 
    build:
     context: kibana/setdashboards/
     dockerfile: Dockerfile
