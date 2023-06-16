@@ -24,7 +24,7 @@ const proxy = createProxyMiddleware({
         if (statusCode === 200 && isManifest) {
             let manifest = '';
             manifest = responseBuffer.toString();                       
-            manifest = manifest.replace(VIDEO_TEST_URL, baseUrl);
+            manifest = manifest.replaceAll(VIDEO_TEST_URL, baseUrl);
             return manifest;  
         } else if (statusCode === 301 || statusCode === 302) {
             res.statusCode = 403;
