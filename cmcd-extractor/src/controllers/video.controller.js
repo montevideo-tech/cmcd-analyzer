@@ -72,7 +72,7 @@ export const video = (req, res, next) => {
                         response = responseBuffer;
                     }
                     
-                    cmcdExtractorService({id, req, concatenatedUrl, decodedJson, dateStart});
+                    cmcdExtractorService({id, req, reqURI:concatenatedUrl, decodedJson, dateStart});
                     return response;
                 }),
             });
