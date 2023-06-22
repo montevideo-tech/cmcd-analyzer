@@ -1,14 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Client } from '@elastic/elasticsearch';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useTable, usePagination } from 'react-table';
 
-const client = new Client({
-    node: 'http://localhost:9200', 
-    auth: {
-    username: 'elastic',
-    password: 'changeme',
-    },
-});
 
 const DataTable = (props) => {
     const {index} = props;
@@ -16,37 +8,50 @@ const DataTable = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
+
+    useEffect(() => {
+        console.log('data:', data);
+    }, [data]);
+
     useEffect(() => {
         console.log('useEffect');
 
         const fetchData = async () => {
-            console.log('fetchData');
 
-            console.log('client');
+            try {
+                console.log('fetchData');
 
-            const response = await client.search({
-                index: index,
-                size: 20,
-                from: (currentPage - 1) * 20,
-            });
+                console.log('client');
+                const response = await fetch(`http://localhost:9200/cmcd-1/_search`,{headers:{authorization: "Basic ZWxhc3RpYzpjaGFuZ2VtZQ=="}});
 
-            const hits = response.body.hits.hits;
-            const totalCount = response.body.hits.total.value;
-            const totalPages = Math.ceil(totalCount / 20);
+                const resData = await response.json();
 
-            setData(hits.map((hit) => hit._source));
-            setTotalPages(totalPages);
+                console.log(resData);
+                
+                const hits = resData.hits.hits;
+                const totalCount = resData.hits.total.value;
+                const totalPages = Math.ceil(totalCount / 10);
+
+                console.log('hits', hits);
+                const temData = hits.map((hit) =>  hit._source);
+
+                setData(temData);
+                setTotalPages(totalPages);
+                
+            } catch (error) {
+                console.error('Error:', error);
+            }
         };
-
+        
         fetchData();
-        const interval = setInterval(fetchData, 5000);
+        // const interval = setInterval(fetchData, 5000);
 
         return () => {
-            clearInterval(interval);
+            // clearInterval(interval);
         };
     }, [currentPage, index]);
 
-    const columns = React.useMemo(() => {
+    const columns = useMemo(() => {
         if (data.length === 0) return [];
     
         const firstDocFields = Object.keys(data[0]);
@@ -55,6 +60,7 @@ const DataTable = (props) => {
           accessor: field,
         }));
     }, [data]);
+
 
     const {
         getTableProps,
