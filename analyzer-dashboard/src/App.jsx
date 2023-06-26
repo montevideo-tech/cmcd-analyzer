@@ -7,8 +7,14 @@ function App() {
   return (
     <div>
       <img src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-1.png" alt="Logo" className="logo"/>
-      <URLGenerator/>
-      <DataTable/>
+      <div className="row">
+          <div className='col'>
+            <URLGenerator/>
+          </div>
+          <div className='col'>
+            <DataTable/>
+          </div>
+        </div>
     </div>
   );
 }
