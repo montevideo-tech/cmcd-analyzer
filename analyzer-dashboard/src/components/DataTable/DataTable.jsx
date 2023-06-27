@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useTable, usePagination } from 'react-table';
-
+import Button from 'react-bootstrap/esm/Button';
+import './DataTable.css'
+import DataView from '../DataView/DataView';
 
 const DataTable = (props) => {
     const {index} = props;
@@ -22,7 +23,7 @@ const DataTable = (props) => {
                 console.log('fetchData');
 
                 console.log('client');
-                const response = await fetch(`http://localhost:9200/cmcd-1/_search`,{headers:{authorization: "Basic ZWxhc3RpYzpjaGFuZ2VtZQ=="}});
+                const response = await fetch(`http://localhost:9200/cmcd-14/_search?size=10&from=${(currentPage - 1) * 10}` ,{headers:{authorization: "Basic ZWxhc3RpYzpjaGFuZ2VtZQ=="}});
 
                 const resData = await response.json();
 
@@ -63,97 +64,37 @@ const DataTable = (props) => {
         }
     };
 
-    const renderData = () => {
-        const startIndex = (currentPage -1) * 10;
-        const endIndex = startIndex + 10;
+    // const renderData = () => {
+    //     const startIndex = (currentPage -1) * 10;
+    //     const endIndex = startIndex + 10;
 
-        // return data.slice(startIndex, endIndex).map((item, index) => (
-        //     <div key={`${item.id}-${index}`}>{/* Renderiza cada elemento en la interfaz de usuario */}</div>
-        // ));
-        return data.slice(startIndex, endIndex).map((item, index) => (
-            <div key={index}>
-              <textarea value={JSON.stringify(item, null, 2)} readOnly></textarea>
-            </div>
-          ));
-    }
+    //     // return data.slice(startIndex, endIndex).map((item, index) => (
+    //     //     <div key={`${item.id}-${index}`}>{/* Renderiza cada elemento en la interfaz de usuario */}</div>
+    //     // ));
+    //     return data.slice(startIndex, endIndex).map((item, index) => (
+    //         <div key={index}>
+    //           {/* <textarea value={JSON.stringify(item, null, 2)} readOnly></textarea> */}
+    //           <Button className="btn" style={{width: '100%'}}>
+    //             {`${JSON.stringify(item, null, 2)?.slice(0,50)}...`}
+    //           </Button>
+    //         </div>
+    //     ));
+    // }
 
-    // const columns = useMemo(() => {
-    //     if (data.length === 0) return [];
-    
-    //     const firstDocFields = Object.keys(data[0]);
-    //     return firstDocFields.map((field) => ({
-    //       Header: field,
-    //       accessor: field,
-    //     }));
-    // }, [data]);
-
-
-    // const {
-    //     getTableProps,
-    //     getTableBodyProps,
-    //     headerGroups,
-    //     page,
-    //     prepareRow,
-    //     canPreviousPage,
-    //     canNextPage,
-    //     pageOptions,
-    //     nextPage,
-    //     previousPage,
-    //     state: { pageIndex },
-    // } = useTable(
-    //     {
-    //         columns,
-    //         data,
-    //         initialState: { pageIndex: 0 },
-    //     },
-    //     usePagination
-    // );
     
     return (
-        <div>
-            {/* <table {...getTableProps()}>
-            <thead>
-                {headerGroups.map((index, headerGroup) => (
-                <tr key={index} {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map((index, column) => (
-                        <th key={index} {...column.getHeaderProps()}>{column.render('Header')}</th>
-                    ))}
-                </tr>
-                ))}
-            </thead>
-            <tbody {...getTableBodyProps()}>
-                {page.map((index, row) => {
-                prepareRow(row);
-                return (
-                    <tr key={index} {...row.getRowProps()}>
-                    {row.cells.map((index, cell) => (
-                        <td key={index} {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                    ))}
-                    </tr>
-                );
-                })}
-            </tbody>
-            </table>
+        <div className="container-box">
             <div>
-            <button onClick={() => setCurrentPage((prevPage) => prevPage - 1)} disabled={!canPreviousPage}>
-                Back
-            </button>
-            <span>
-                Page {pageIndex + 1} of {pageOptions.length}
-            </span>
-            <button onClick={() => setCurrentPage((prevPage) => prevPage + 1)} disabled={!canNextPage}>
-                Next
-            </button>
-            </div> */}
-            <div>{renderData()}</div>
-            <div>
-                <button onClick={previousPage} disabled={currentPage === 1}>
-                prev
-                </button>
-                <span>Página actual: {currentPage}</span>
-                <button onClick={nextPage} disabled={currentPage === totalPages}>
-                next
-                </button>
+                <DataView data={data}/>
+                <div>
+                    <button onClick={previousPage} disabled={currentPage === 1}>
+                    prev
+                    </button>
+                    <span>Página actual: {currentPage}</span>
+                    <button onClick={nextPage} disabled={currentPage === totalPages}>
+                    next
+                    </button>
+                </div>
             </div>
         </div>
     );
