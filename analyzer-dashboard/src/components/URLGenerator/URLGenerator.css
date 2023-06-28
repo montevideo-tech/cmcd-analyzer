@@ -1,20 +1,10 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
+
  
   .container-box {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px;
     margin: 20px;
     border-radius: 10px;
-  }
-  
-  .custom-button {
-    background-color: #4dbaac;
-    color: white;
   }
   
   .divider {

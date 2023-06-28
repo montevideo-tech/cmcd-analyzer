@@ -1,5 +1,9 @@
 import './DataView.css'
+import warningImg from '../../assets/warning.svg'
+import errorImg from '../../assets/error.svg'
+import successImg from '../../assets/success.svg'
 import moment from 'moment';
+import Button from 'react-bootstrap/esm/Button';
 
 export const TIME_FORMAT = 'HH:mm:ss';
 export const DAY_OF_WEEK_FORMAT = 'dddd';
@@ -42,22 +46,44 @@ const formatStartAndEndTime = (startTimeAndDate, endTimeAndDate) => {
     const formattedDate = `${startDate} - ${startTime}`;
   
     return formattedDate;
-  };
+};
+
+const renderImage = (type) => {
+    switch (type) {
+        case 'warning':
+            return (
+                <img width="27" className='pe-2' src={warningImg}/>
+            );
+        case 'danger':
+            return (
+                <img width="27" className='pe-2' src={errorImg}/>
+            );
+        default:
+            return (
+                <img width="27" className='pe-2' src={successImg}/>
+            );
+    };
+}
 
 const DataView = ({ data, handleClick }) => {
-    // const {data} = props;
+    console.log(data)
     return (
         <div>
-            {data.map((item, index) => {
+            {data.length? data.map((item, index) => {
+                const type = item?.valid? item?.warnings != []? 'success' : 'warning' : 'danger';
+                console.log(type)
                 return (
-                    <div>
+                    <div key={index}>
                         <div style={{textAlign:'right', color:'grey'}}>{formatStartAndEndTime(item.received_datetime,item.returned_datetime)}</div>
-                        <button className="json-btn" key={index} onClick={() => handleClick(item)}>
-                            {`${JSON.stringify(item.cmcd_data, null, 2)?.slice(0,50)}...`}
-                        </button>
+                        <Button className="btn data-btn" variant={type} onClick={() => handleClick(item)}> 
+                            {renderImage(type)}
+                            {item?.cmcd_data}
+                        </Button>
                     </div>
                 )
-            })}
+            }):(
+                <h3>No Data</h3>
+            )}
         </div>
     )
 }

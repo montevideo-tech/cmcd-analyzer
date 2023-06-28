@@ -4,11 +4,11 @@ import InputField from '../InputField/InputFields';
 import DisplayedURL from '../DisplayedURL/DisplayedURL';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuidv4 } from 'uuid';
-import React from 'react';
 import { IoMdCloseCircle } from 'react-icons/io'
 
 
-function URLGenerator() {
+function URLGenerator(props) {
+  const {index, setIndex} = props;
   const [field1, setField1] = useState('');
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
@@ -56,6 +56,7 @@ function URLGenerator() {
 
   const handleGenerateURL = () => {
     const uuid = uuidv4().replaceAll('-','');
+    setIndex(uuid);
     const ipValue = ip ? ip : "localhost";
     const portValue = port ? port : "3000";
     if (!field1) {
@@ -160,13 +161,13 @@ function URLGenerator() {
         
         <div className='row'>
           <div className='col'>
-            <button className="custom-button" onClick={handleAddNewObject}>Add new object</button>;
+            <button className="custom-button" onClick={handleAddNewObject}>Add new object</button>
           </div>
         </div>
         <hr className="divider" />
         <div className='row'>
           <div className='col'>
-            <button className="custom-button" onClick={handleGenerateURL}>Generate URL</button>;
+            <button className="custom-button" onClick={handleGenerateURL}>Generate URL</button>
           </div>
         </div>
         <div className="row mt-3">
