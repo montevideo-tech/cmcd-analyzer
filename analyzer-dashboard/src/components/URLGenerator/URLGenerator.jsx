@@ -86,7 +86,8 @@ function URLGenerator() {
   };
   
   return (
-    <div className="container-box">
+    // className="container-box"
+    <div>
         <div className='row'>
           <div className='col'>
             <InputField

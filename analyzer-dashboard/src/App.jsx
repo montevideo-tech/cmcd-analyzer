@@ -8,11 +8,15 @@ function App() {
     <div>
       <img src="https://montevideotech.dev/wp-content/uploads/2020/09/mvd-tech-1.png" alt="Logo" className="logo"/>
       <div className="row">
-        <div className='col'>
-          <URLGenerator/>
+        <div className="container-box">
+          <div className='col'>
+            <URLGenerator/>
+          </div>
         </div>
-        <div className='col'>
-          <DataTable/>
+        <div className="container-box">
+          <div className='col'>
+            <DataTable/>
+          </div>
         </div>
       </div>
     </div>

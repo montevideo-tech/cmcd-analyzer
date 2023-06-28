@@ -8,6 +8,8 @@ const DataTable = (props) => {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [showFullObject, setShowFullObject] = useState(false);
+    const [selectedObject, setSelectedObject] = useState(null);
 
 
     useEffect(() => {
@@ -64,6 +66,11 @@ const DataTable = (props) => {
         }
     };
 
+    const handleButtonClick = (object) => {
+        setShowFullObject(true);
+        setSelectedObject(object);
+    };
+
     // const renderData = () => {
     //     const startIndex = (currentPage -1) * 10;
     //     const endIndex = startIndex + 10;
@@ -83,19 +90,39 @@ const DataTable = (props) => {
 
     
     return (
-        <div className="container-box">
-            <div>
+        // className="container-box"
+        <div>
+            {showFullObject ? (
+                <div>
+                    <button onClick={() => setShowFullObject(false)}>Volver</button>
+                    <pre>{JSON.stringify(selectedObject, null, 2)}</pre>
+                </div>
+            ) : (
+                <div>
+                    <DataView data={data} handleClick={handleButtonClick}/>
+                    <div>
+                        <button onClick={previousPage} disabled={currentPage === 1}>
+                        prev
+                        </button>
+                        <span className=''>Página actual: {currentPage}</span>
+                        <button onClick={nextPage} disabled={currentPage === totalPages}>
+                        next
+                        </button>
+                    </div>
+                </div>
+            )}
+            {/* <div>
                 <DataView data={data}/>
                 <div>
                     <button onClick={previousPage} disabled={currentPage === 1}>
                     prev
                     </button>
-                    <span>Página actual: {currentPage}</span>
+                    <span className=''>Página actual: {currentPage}</span>
                     <button onClick={nextPage} disabled={currentPage === totalPages}>
                     next
                     </button>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };

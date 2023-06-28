@@ -44,15 +44,15 @@ const formatStartAndEndTime = (startTimeAndDate, endTimeAndDate) => {
     return formattedDate;
   };
 
-const DataView = (props) => {
-    const {data} = props;
+const DataView = ({ data, handleClick }) => {
+    // const {data} = props;
     return (
         <div>
             {data.map((item, index) => {
                 return (
                     <div>
                         <div style={{textAlign:'right', color:'grey'}}>{formatStartAndEndTime(item.received_datetime,item.returned_datetime)}</div>
-                        <button className="json-btn" key={index}>
+                        <button className="json-btn" key={index} onClick={() => handleClick(item)}>
                             {`${JSON.stringify(item.cmcd_data, null, 2)?.slice(0,50)}...`}
                         </button>
                     </div>
