@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import './DataTable.css'
+import DataElement from '../DataElement/DataElement';
 import DataView from '../DataView/DataView';
 
 const DataTable = (props) => {
@@ -10,6 +11,8 @@ const DataTable = (props) => {
     const [totalPages, setTotalPages] = useState(0);
     const [showFullObject, setShowFullObject] = useState(false);
     const [selectedObject, setSelectedObject] = useState(null);
+    const [showData, setShowData] = useState(false);
+
 
 
     useEffect(() => {
@@ -68,37 +71,32 @@ const DataTable = (props) => {
     };
 
     const handleButtonClick = (object) => {
-        setShowFullObject(true);
+        setShowData(true);
         setSelectedObject(object);
     };
     
     return (
         <div>
-            {showFullObject ? (
-                <div>
-                    <button onClick={() => setShowFullObject(false)}>Volver</button>
-                    <pre>{JSON.stringify(selectedObject, null, 2)}</pre>
-                </div>
-            ) : (
-                <div>
-                    <DataView data={data} handleClick={handleButtonClick}/>
-                    {totalPages?(
-                        <div className='mt-3'>
-                            <button className='custom-button' onClick={previousPage} disabled={currentPage === 1}>
-                                Prev
-                            </button>
-                            <span style={{color:'white', margin:'0 1em 0 1em'}}>
-                                Page {currentPage} of {totalPages}
-                            </span>
-                            <button className='custom-button' onClick={nextPage} disabled={currentPage === totalPages}>
-                                Next
-                            </button>
-                        </div>
-                    ): (
-                        <></>
-                    )}
-                </div>
-            )}
+            <div>
+                <DataElement data={data} handleClick={handleButtonClick}/>
+                {totalPages?(
+                    <div className='mt-3'>
+                        <button className='custom-button' onClick={previousPage} disabled={currentPage === 1}>
+                            Prev
+                        </button>
+                        <span style={{color:'white', margin:'0 1em 0 1em'}}>
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        <button className='custom-button' onClick={nextPage} disabled={currentPage === totalPages}>
+                            Next
+                        </button>
+                    </div>
+                ): (
+                    <></>
+                )}
+            </div>
+
+            <DataView show={showData} setShow={setShowData} data={selectedObject}/>
         </div>
     );
 };

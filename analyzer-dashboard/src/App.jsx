@@ -3,7 +3,6 @@ import './App.css'
 import DataTable from './components/DataTable/DataTable';
 import URLGenerator from './components/URLGenerator/URLGenerator';
 
-
 function App() {
 
   const [index, setIndex] = useState(''); 
