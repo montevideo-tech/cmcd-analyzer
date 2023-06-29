@@ -24,7 +24,7 @@ const proxy = createProxyMiddleware({
         if (statusCode === 200 && isManifest) {
             let manifest = '';
             manifest = responseBuffer.toString();                       
-            manifest = manifest.replace(VIDEO_TEST_URL, baseUrl);
+            manifest = manifest.replaceAll(VIDEO_TEST_URL, baseUrl);
             return manifest;  
         } else if (statusCode === 301 || statusCode === 302) {
             res.statusCode = 403;
@@ -43,7 +43,7 @@ export const videoTest = (req, res, next) => {
     
     const dateStart = new Date().toISOString();
     const {id} = req.params;
-    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}${req._parsedUrl.search || ''}`;
+    const reqURI = `${VIDEO_TEST_URL}${req.params[0]}`;
 
     try {
         proxy(req, res, next);

@@ -7,6 +7,17 @@
     border-radius: 10px;
   }
   
+  .custom-button {
+    background-color: #4dbaac;
+    color: white;
+  }
+  
+  .custom-font {
+    font-family: 'Kanit', sans-serif;
+    margin-bottom: 20px;
+    color: #4dbaac;
+  }
+
   .divider {
     border-color: white;
     border-width: 1px;
@@ -25,4 +36,13 @@
 
   .close-icon {
     color: #4dbaac;
+  }
+
+  .info-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
   }

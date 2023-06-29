@@ -72,8 +72,8 @@ export const video = (req, res, next) => {
                         res.headers = proxyRes.headers;
                         response = responseBuffer;
                     }
-                    const id = req.params.id;
-                    cmcdExtractorService({id, req, concatenatedUrl, decodedJson, dateStart});
+                    const id = req.params.id;                    
+                    cmcdExtractorService({id, req, reqURI:concatenatedUrl, decodedJson, dateStart});
                     return response;
                 }),
             });

@@ -5,13 +5,16 @@ import DisplayedURL from '../DisplayedURL/DisplayedURL';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { v4 as uuidv4 } from 'uuid';
 import { IoMdCloseCircle } from 'react-icons/io'
+import { AiFillInfoCircle } from 'react-icons/ai'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 
 function URLGenerator(props) {
   const {index, setIndex} = props;
   const [field1, setField1] = useState('');
-  const [ip, setIp] = useState('');
-  const [port, setPort] = useState('');
+  const [ip, setIp] = useState('3000');
+  const [port, setPort] = useState('localhost');
   const [generatedURL, setGeneratedURL] = useState('');
   const [field1Error, setField1Error] = useState(false);
   const [objList, setobjList] = useState([{key: '', val: ''}]);
@@ -85,10 +88,21 @@ function URLGenerator(props) {
     newFields.splice(index, 1);
     setobjList(newFields);
   };
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      To include any additional information in the request, simply fill in the optional fields key-value and click the 'Add new object' button. You can add as many pieces of information as needed, and they will be encoded in base64. This step must be done before pressing the 'GenerateURL' button.
+    </Tooltip>
+  );
   
   return (
-    // className="container-box"
-    <div>
+    <div className="container-box">
+        <h3 className="custom-font">
+          URL Generator
+        </h3>
+        <h6 className="custom-font" style={{ color: 'white' }}>
+        This is a URLGenerator. To generate the desired URL, simply paste the VideoURL of the video into the designated field, specify the IP and port, and then click on the 'GenerateURL' button. This URLGenerator tool facilitates the process.
+        </h6>
         <div className='row'>
           <div className='col'>
             <InputField
@@ -124,40 +138,54 @@ function URLGenerator(props) {
             </div>
           </div>
         </div>
-        <h6 style={{ color: 'white' }}>
+        <h6 className="custom-font" style={{ color: 'white' }}>
           The default ip and port will be localhost:3000 if no other value is assigned.
         </h6>
         <hr className="divider" />
-
-        {objList.map((item, index) => (
-          <div key={index}>
-            <div className="row">
-              <div className="col-5">
-                <InputField 
-                  value={item.key}
-                  onChange={(e) => handleInpuChange(e, index, 'key')}
-                  placeholder="key"
-                  name="Key: "
-                  message='Enter this field.'
-                />
-              </div>
-              <div className="col-5">
-                <InputField 
-                  value={item.val}
-                  onChange={(e) => handleInpuChange(e, index, 'val')}
-                  placeholder="value"
-                  name="Value: "
-                  message='Enter this field.'
-                />
-              </div>
-              <div className="col-1 d-flex align-items-center justify-content-center">
-                <button className="remove-button" onClick={() => handleRemoveField(index)}>
-                  <IoMdCloseCircle className="close-icon" size={24}/>
-                </button>
+        <div className='row'>
+          <div className="col-1 align-items-center justify-content-center">
+            <OverlayTrigger
+              placement="right"
+              delay={{ show: 250, hide: 400 }}
+              overlay={renderTooltip}
+            >
+              <button className="info-button">
+                <AiFillInfoCircle className="close-icon" size={24}/>
+              </button>
+            </OverlayTrigger>
+          </div>
+        <div className="col" >
+          {objList.map((item, index) => (
+            <div key={index}>
+              <div className="row">
+                <div className="col-5">
+                  <InputField 
+                    value={item.key}
+                    onChange={(e) => handleInpuChange(e, index, 'key')}
+                    placeholder="key"
+                    name="Key: "
+                    message='Enter this field.'
+                  />
+                </div>
+                <div className="col-5">
+                  <InputField 
+                    value={item.val}
+                    onChange={(e) => handleInpuChange(e, index, 'val')}
+                    placeholder="value"
+                    name="Value: "
+                    message='Enter this field.'
+                  />
+                </div>
+                <div className="col-1 d-flex align-items-center justify-content-center">
+                  <button className="remove-button" onClick={() => handleRemoveField(index)}>
+                    <IoMdCloseCircle className="close-icon" size={24}/>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
+        </div>
         
         <div className='row'>
           <div className='col'>
