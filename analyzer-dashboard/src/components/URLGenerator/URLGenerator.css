@@ -18,7 +18,9 @@
   }
   
   .custom-font {
-    font-family: Verdana, sans-serif;
+    font-family: 'Kanit', sans-serif;
+    margin-bottom: 20px;
+    color: #4dbaac;
   }
 
   .divider {
@@ -39,4 +41,13 @@
 
   .close-icon {
     color: #4dbaac;
+  }
+
+  .info-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
   }
