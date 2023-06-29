@@ -10,8 +10,8 @@ import { IoMdCloseCircle } from 'react-icons/io'
 
 function URLGenerator() {
   const [field1, setField1] = useState('');
-  const [ip, setIp] = useState('');
-  const [port, setPort] = useState('');
+  const [ip, setIp] = useState('3000');
+  const [port, setPort] = useState('localhost');
   const [generatedURL, setGeneratedURL] = useState('');
   const [field1Error, setField1Error] = useState(false);
   const [objList, setobjList] = useState([{key: '', val: ''}]);
@@ -87,6 +87,15 @@ function URLGenerator() {
   
   return (
     <div className="container-box">
+        <h5 className="custom-font" style={{ color: 'white' }}>
+          URL Generator
+        </h5>
+        <h6 className="custom-font" style={{ color: 'white' }}>
+        This is a URLGenerator. To  generate the desired URL, just paste the VideoURL of the video in the respective field, set the IP and port, and press the 'GenerateURL' button.
+        </h6>
+        <h6 className="custom-font" style={{ color: 'white' }}>
+        To include any additional information in the request, simply fill in the optional fields key-value and click the 'Add new object' button. You can add as many pieces of information as needed, and they will be encoded in base64. This step must be done before pressing the 'GenerateURL' button. 
+        </h6>
         <div className='row'>
           <div className='col'>
             <InputField
@@ -122,7 +131,7 @@ function URLGenerator() {
             </div>
           </div>
         </div>
-        <h6 style={{ color: 'white' }}>
+        <h6 className="custom-font" style={{ color: 'white' }}>
           The default ip and port will be localhost:3000 if no other value is assigned.
         </h6>
         <hr className="divider" />
