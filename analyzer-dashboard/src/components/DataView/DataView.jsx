@@ -7,7 +7,6 @@ const DataView = ({show, setShow, data}) => {
   const handleClose = () => setShow(false);
 
   const renderValue = (value, prefix = '') => {
-    console.log(value);
     if (typeof value === 'boolean') {
       return value ? 'true' : 'false';
     }
@@ -48,7 +47,6 @@ const DataView = ({show, setShow, data}) => {
           <div>
             {renderTopLevel(data)}
           </div>
-        {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         </Offcanvas.Body>
       </Offcanvas>
     </div>
