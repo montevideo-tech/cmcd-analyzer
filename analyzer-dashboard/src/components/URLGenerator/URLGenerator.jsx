@@ -13,8 +13,8 @@ import Tooltip from 'react-bootstrap/Tooltip';
 function URLGenerator(props) {
   const {setIndex} = props;
   const [field1, setField1] = useState('');
-  const [ip, setIp] = useState('3000');
-  const [port, setPort] = useState('localhost');
+  const [ip, setIp] = useState('localhost');
+  const [port, setPort] = useState('3000');
   const [generatedURL, setGeneratedURL] = useState('');
   const [field1Error, setField1Error] = useState(false);
   const [objList, setobjList] = useState([{key: '', val: ''}]);
