@@ -71,7 +71,7 @@ services:
   cmcd-extractor-container: 
    build:
     context: ./cmcd-extractor
-    dockerfile: ./cmcd-extractor/Dockerfile
+    dockerfile: ./Dockerfile
    command: bash -c "cd code && npm i && npm run dev"
    ports: 
     - 3000:3000
