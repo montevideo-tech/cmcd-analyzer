@@ -5,8 +5,9 @@ import './InputFields.css'
 function InputField({ value, onChange, placeholder, name, error, message }) {
   return (
     <InputGroup className="mb-3" htmlFor="formBasic">
-        <InputGroup.Text className="custom-input-group-text">{name}</InputGroup.Text>
+        <InputGroup.Text style={{color:'white', backgroundColor: '#4dbaac'}} className="custom-input-group-text">{name}</InputGroup.Text>
         <Form.Control
+          style={{color:'black', backgroundColor: 'white'}}
           value={value}
           onChange={onChange}
           placeholder={placeholder}

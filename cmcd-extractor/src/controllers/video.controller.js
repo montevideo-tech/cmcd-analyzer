@@ -28,6 +28,7 @@ export const video = (req, res, next) => {
     
     req.dateStart = new Date().toISOString();
     const {id} = req.params;
+    console.log('id: ', id);
     try {
 
         const videoURL = req.params[0];
@@ -71,7 +72,7 @@ export const video = (req, res, next) => {
                         res.headers = proxyRes.headers;
                         response = responseBuffer;
                     }
-                    
+                    const id = req.params.id;                    
                     cmcdExtractorService({id, req, reqURI:concatenatedUrl, decodedJson, dateStart});
                     return response;
                 }),

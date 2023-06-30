@@ -1,9 +1,4 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
-  }
+
  
   .container-box {
     background-color: rgba(0, 0, 0, 0.5);
@@ -17,6 +12,12 @@
     color: white;
   }
   
+  .custom-font {
+    font-family: 'Kanit', sans-serif;
+    margin-bottom: 20px;
+    color: #4dbaac;
+  }
+
   .divider {
     border-color: white;
     border-width: 1px;
@@ -35,4 +36,13 @@
 
   .close-icon {
     color: #4dbaac;
+  }
+
+  .info-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    top: -10px;
   }
