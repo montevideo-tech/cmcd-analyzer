@@ -96,7 +96,7 @@ function URLGenerator(props) {
   );
   
   return (
-    <div className="container-box">
+    <div>
         <h3 className="custom-font">
           URL Generator
         </h3>
