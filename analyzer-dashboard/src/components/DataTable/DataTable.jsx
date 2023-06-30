@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
-import Button from 'react-bootstrap/esm/Button';
+import { useEffect, useState } from 'react';
 import './DataTable.css'
 import DataElement from '../DataElement/DataElement';
 import DataView from '../DataView/DataView';
@@ -9,7 +8,6 @@ const DataTable = (props) => {
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
-    const [showFullObject, setShowFullObject] = useState(false);
     const [selectedObject, setSelectedObject] = useState(null);
     const [showData, setShowData] = useState(false);
 

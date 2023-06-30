@@ -8,7 +8,7 @@ import { IoMdCloseCircle } from 'react-icons/io'
 
 
 function URLGenerator(props) {
-  const {index, setIndex} = props;
+  const {setIndex} = props;
   const [field1, setField1] = useState('');
   const [ip, setIp] = useState('');
   const [port, setPort] = useState('');
@@ -87,7 +87,6 @@ function URLGenerator(props) {
   };
   
   return (
-    // className="container-box"
     <div>
         <div className='row'>
           <div className='col'>

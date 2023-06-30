@@ -1,5 +1,5 @@
 .data-value {
-    max-width: 400px; /* Ajusta el valor según tu preferencia */
+    max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
