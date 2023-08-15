@@ -7,9 +7,9 @@ This project uses Elasticsearch to store the data and Kibana for data visualizat
 
 ## Table of Contents
 
-* [Run the environment](#Run-the-environment)
-* [Analyzing CMCD through the Web](#Analyzing-CMCD-through-the-Web)
-* [Analyzing CMCD through Kibana](#Analyzing-CMCD-through-Kibana)
+* [Run the environment](#run-the-environment)
+* [Analyzing CMCD through the Web](#analyzing-cmcd-through-the-web)
+* [Analyzing CMCD through Kibana](#analyzing-cmcd-through-kibana)
 * [Advanced topics](#Advanced-topics)
 
 ## Run the enviroment
