@@ -1,6 +1,6 @@
 # CMCD-Analyzer
+![¡](docs/cmcd-analizer-banner.png)
 
-**Welcome to CMCD-Analyzer.**
 The CMCD-Analyzer allows any developer or tester to collect and analyze data from any type of player that has CMCD implemented. To be more specific, it will intercept players requests to check if the CMCD keys sent to the CDN are valid or not regarding the [CMCD Standard](https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5004-final.pdf). 
 
 This project uses Elasticsearch to store the data and Kibana for data visualization and graphing.
