@@ -1,13 +1,126 @@
-version: "3" 
-services: 
- cmcd-extractor-container: 
+version: '3.7'
+
+services:
+
+  setup:
+    build:
+      context: setup/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    init: true
+    volumes:
+      - ./setup/entrypoint.sh:/entrypoint.sh:ro,Z
+      - ./setup/lib.sh:/lib.sh:ro,Z
+      - ./setup/roles:/roles:ro,Z
+      - setup:/state:Z
+    environment:
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+      METRICBEAT_INTERNAL_PASSWORD: ${METRICBEAT_INTERNAL_PASSWORD:-}
+      FILEBEAT_INTERNAL_PASSWORD: ${FILEBEAT_INTERNAL_PASSWORD:-}
+      HEARTBEAT_INTERNAL_PASSWORD: ${HEARTBEAT_INTERNAL_PASSWORD:-}
+      MONITORING_INTERNAL_PASSWORD: ${MONITORING_INTERNAL_PASSWORD:-}
+      BEATS_SYSTEM_PASSWORD: ${BEATS_SYSTEM_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro,Z
+      - elasticsearch:/usr/share/elasticsearch/data:Z
+    ports:
+      - 9200:9200
+      - 9300:9300
+    environment:
+      node.name: elasticsearch
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+      # Bootstrap password.
+      # Used to initialize the keystore during the initial startup of
+      # Elasticsearch. Ignored on subsequent runs.
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-}
+      # Use single node discovery in order to disable production mode and avoid bootstrap checks.
+      # see: https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
+      discovery.type: single-node
+    networks:
+      - elk
+    restart: unless-stopped
+
+  kibana:
+    build:
+      context: kibana/
+      args:
+        ELASTIC_VERSION: ${ELASTIC_VERSION}
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro,Z
+    ports:
+      - 5601:5601
+    environment:
+      KIBANA_SYSTEM_PASSWORD: ${KIBANA_SYSTEM_PASSWORD:-}
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+  
+  cmcd-extractor-container: 
    build:
-    context: .
-    dockerfile: Dockerfile
+    context: ./cmcd-extractor
+    dockerfile: ./Dockerfile
    command: bash -c "cd code && npm i && npm run dev"
    ports: 
-    - "3000:3000" 
+    - 3000:3000
+   environment:
+    - ELASTICSEARCH_HOST=elasticsearch
+    - ELASTICSEARCH_PORT=9200
+   networks:
+    - elk
+   env_file:
+    - .env
    stdin_open: true 
    tty: true 
    volumes: 
-     - ./:/code
+     - ./cmcd-extractor:/code
+   depends_on:
+     - elasticsearch
+
+  analyzer-dashboard-container: 
+   build:
+    context: ./analyzer-dashboard
+    dockerfile: Dockerfile
+   command: bash -c "cd code && npm i && npm run dev"
+   ports: 
+    - 5173:5173
+   networks:
+    - elk
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./analyzer-dashboard/:/code
+
+  kibana-dashboards-setup-container: 
+   build:
+    context: kibana/setdashboards/
+    dockerfile: Dockerfile
+   command: bash -c "cd code && ./kibanaTemplate.sh"
+   networks:
+    - elk
+   stdin_open: true 
+   tty: true 
+   volumes: 
+     - ./kibana/setdashboards/:/code
+   depends_on:
+     - kibana
+
+networks:
+  elk:
+    driver: bridge
+
+volumes:
+  setup:
+  elasticsearch:
