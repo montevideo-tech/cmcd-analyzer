@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="urn:mpeg:dash:schema:mpd:2011"
+  xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd"
+  type="list"
+  minBufferTime="PT1S"
+  profiles="urn:mpeg:dash:profile:list:2024"
+  publishTime="2025-01-14T20:29:31.022Z">
+  <Period id="1" duration="PT10S">
+    <ImportedMPD
+      uri="https://redirector.gvt1.com/api/manifest/dash/id/f1be9c477e89fd68/itag/0/source/dclk_video_ads/acao/yes/cpn/qOvh4O0YAa2jPbET/ctier/L/ei/CfJEZ46ED5SPobIP0NmgiQ0/hfr/all/ip/0.0.0.0/keepalive/yes/playlist_type/DVR/requiressl/yes/susc/dvc/xpc/Eghovf3BOnoBAQ%3D%3D/expire/1764107657/sparams/expire,ei,ip,requiressl,source,itag,hfr,acao,ctier,id,playlist_type,susc,xpc/sig/AJfQdSswRAIgVHu-YX-65-daHfdpM5veBIhJDBnU9O7E7FPNelDibkICIFMOgZMWJbFeH3Z2BE8umm5PaUMZuBOwCWiffDy2kh1B/file/index.mpd"
+      earliestResolutionTimeOffset="0" />
+  </Period>
+</MPD>

@@ -11,9 +11,10 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 
 function URLGenerator(props) {
-  const {setIndex, setAutoplay, autoplay} = props;
+  const {setIndex, setAutoplay, setBypass, autoplay, bypass} = props;
   const parentSetGeneratedUrl = props.setGeneratedURL;
-  const [field1, setField1] = useState('https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd');
+  //const [field1, setField1] = useState('https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd');
+  const [field1, setField1] = useState('http://localhost:5173/public/content/live-alternative-ads.mpd');
   const [ip, setIp] = useState(window.location.hostname);
   const [port, setPort] = useState('3000');
   const [generatedURL, setGeneratedURL] = useState('');
@@ -59,17 +60,23 @@ function URLGenerator(props) {
 
 
   const handleGenerateURL = () => {
-    const uuid = uuidv4().replaceAll('-','');
-    setIndex(uuid);
-    const ipValue = ip ? ip : "localhost";
-    const portValue = port ? port : "3000";
     if (!field1) {
       setField1Error(true);
+      return;
     }
-    else {
+
+    if (bypass){
+      setGeneratedURL(field1);
+      parentSetGeneratedUrl(field1);
+    } else {
+
+      const uuid = uuidv4().replaceAll('-','');
+      setIndex(uuid);
+      const ipValue = ip ? ip : "localhost";
+      const portValue = port ? port : "3000";
+
       const url = `http://${ipValue}:${portValue}/video/${uuid}/${divideURL(field1)}`;
       setGeneratedURL(url);
-      console.log(parentSetGeneratedUrl)
       parentSetGeneratedUrl(url);
     }
   };
@@ -201,7 +208,12 @@ function URLGenerator(props) {
             <button className={`autoplay-button `+ (autoplay ? "autoplay-enabled" : "")} onClick={() => setAutoplay(!autoplay)}>
               {(autoplay ? "Disable Autoplay" : "Enable Autoplay")}
             </button>
-            </div>
+          </div>
+          <div className='col'>
+            <button className={`bypass-button `+ (bypass ? "bypass-enabled" : "")} onClick={() => setBypass(!bypass)}>
+              {(bypass ? "Disable Bypass" : "Enable Bypass")}
+            </button>
+          </div>          
         </div>
         <hr className="divider" />
         <div className='row'>

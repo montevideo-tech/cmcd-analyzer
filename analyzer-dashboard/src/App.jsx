@@ -8,6 +8,7 @@ function App() {
   const [index, setIndex] = useState(''); 
   const [generatedURL, setGeneratedURL] = useState('');
   const [autoplay, setAutoplay] = useState(false);
+  const [bypass, setBypass] = useState(false);
 
   return (
     <div>
@@ -17,7 +18,10 @@ function App() {
       <div className="custom-row">
         <div className='col'>
           <div className="container-box">
-            <URLGenerator setIndex={setIndex} index={index} setAutoplay={setAutoplay} autoplay={autoplay} setGeneratedURL={setGeneratedURL}/>
+            <URLGenerator setIndex={setIndex} index={index} 
+              setAutoplay={setAutoplay} autoplay={autoplay} 
+              setBypass={setBypass} bypass={bypass} 
+              setGeneratedURL={setGeneratedURL}/>
           </div>
         </div>
         { generatedURL ? (

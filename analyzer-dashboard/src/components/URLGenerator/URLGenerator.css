@@ -47,12 +47,12 @@
     top: -10px;
   }
 
-  .autoplay-button {
+  .autoplay-button, .bypass-button{
     background-color: #4dbaac;
     color: white;
   }
   
-  .autoplay-enabled {
+  .autoplay-enabled, .bypass-enabled{
     background-color: #24554e;
     color: white;
   }
