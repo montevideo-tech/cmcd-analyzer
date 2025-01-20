@@ -1,11 +1,11 @@
 import { saveData } from '../utils/saveData.js';
-import parseQueryToJson from '../utils/parseQueryToJson.js';
+import parseCMCDQueryToJson from '../utils/parseCMCDQueryToJson.js';
 
 export const cmcdExtractorService = async ({id, req, reqURI, decodedJson, dateStart, cmcdMode}) => {
     const body = {};
     const rawData = req?.query['CMCD']
     if(rawData){
-        const cmcd_keys = parseQueryToJson(req?.query['CMCD'])
+        const cmcd_keys = parseCMCDQueryToJson(req?.query['CMCD'])
         
         body.id = id;
         body['user-agent'] = req.headers['user-agent'];
