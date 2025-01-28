@@ -70,7 +70,7 @@
                                 //enabledKeys: ['sid', 'cid', 'ts', 'url', 'br', 'd', 'ot', 'tb', 'v', 'sta', 'ttfb', 'ttlb','rc', 'msd'], /* optional, overrides global keys */
                                 requestUrl: 'http://' + window.location.hostname + ':3000/cmcd/response-mode', /*mandatory, URL to send report */
                                 requestMethod: 'POST', /*optional, get by default */
-                                enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
+                                // enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
                             },
                             eventMode: {
                                 enabled: true, /* enable cmcdv2 state-interval mode. FALSE by default */
@@ -79,13 +79,13 @@
                                 //enabledKeys: ['sta', 'sid', 'cid', 'sf', 'v', 'ltc', 'msd', ], /* Currently only supports: 'sta', 'ts', 'sid', 'cid', 'sf', 'v', 'lb', 'pr' */
                                 requestUrl: 'http://' + window.location.hostname + ':3000/cmcd/event-mode', /* mandatory, URL to send report */
                                 requestMethod: 'POST',  /* optional, get by default */
-                                enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
+                                // enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
                             }
                         },
                         /*sid: 'b248658d-1d1a-4039-91d0-8c08ba597da5',*/ /* session id send with each request */
                         cid: obtenerUltimos10Caracteres(url), /* content id send with each request */
                         mode: CMCD_MODE_QUERY, /* global mode if not specified in each mode */
-                        enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
+                        // enabledKeys: ['br', 'd', 'ot', 'tb' , 'bl', 'dl', 'mtp', 'nor', 'nrr', 'su' , 'bs', 'rtp' , 'cid', 'pr', 'sf', 'sid', 'st', 'v', 'sta', 'ltc', 'msd', 'sta', 'e', 'int']
                     }
                 }
             });
