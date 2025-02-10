@@ -14,7 +14,7 @@ function URLGenerator(props) {
   const {setIndex, setAutoplay, setBypass, autoplay, bypass} = props;
   const parentSetGeneratedUrl = props.setGeneratedURL;
   //const [field1, setField1] = useState('https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd');
-  const [field1, setField1] = useState('http://localhost:5173/public/content/live-alternative-ads.mpd');
+  const [field1, setField1] = useState(`http://` + window.location.hostname + `:5173/public/content/live-alternative-ads.mpd`);
   const [ip, setIp] = useState(window.location.hostname);
   const [port, setPort] = useState('3000');
   const [generatedURL, setGeneratedURL] = useState('');
